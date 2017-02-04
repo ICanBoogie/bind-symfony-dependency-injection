@@ -38,12 +38,12 @@ class ContainerProxy
 	private $app;
 
 	/**
-	 * @var ContainerBuilder
+	 * @var Container
 	 */
 	private $container;
 
 	/**
-	 * @return ContainerBuilder
+	 * @return Container
 	 */
 	protected function get_container()
 	{
