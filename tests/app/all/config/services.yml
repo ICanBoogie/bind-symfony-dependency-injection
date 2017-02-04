@@ -1,0 +1,9 @@
+services:
+
+  service_a:
+    class: ICanBoogie\Binding\SymfonyDependencyInjection\ServiceA
+
+  service_b:
+    class: ICanBoogie\Binding\SymfonyDependencyInjection\ServiceB
+    arguments:
+      - "@service_a"
