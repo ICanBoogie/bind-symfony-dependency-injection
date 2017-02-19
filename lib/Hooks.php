@@ -24,7 +24,10 @@ class Hooks
 	 */
 	static public function on_app_boot(Application\BootEvent $event, Application $app)
 	{
-		ServiceProvider::define(new ContainerProxy($app));
+		ServiceProvider::define(new ContainerProxy(
+			$app,
+			$app->configs[ContainerConfig::FRAGMENT_FOR_CONTAINER][ContainerConfig::USE_CACHING]
+		));
 	}
 	// @codeCoverageIgnoreEnd
 

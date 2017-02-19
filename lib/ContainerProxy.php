@@ -31,11 +31,18 @@ class ContainerProxy
 	const SERVICE_APP = 'app';
 	const SERVICE_CONTAINER = 'container';
 	const CONFIG_FILENAME = 'services.yml';
+	const USE_CACHING = true;
+	const DONT_USE_CACHING = false;
 
 	/**
 	 * @var Application
 	 */
 	private $app;
+
+	/**
+	 * @var bool
+	 */
+	private $use_caching;
 
 	/**
 	 * @var Container
@@ -54,10 +61,12 @@ class ContainerProxy
 	 * @codeCoverageIgnoreStart
 	 *
 	 * @param Application $app
+	 * @param bool $use_caching
 	 */
-	public function __construct(Application $app)
+	public function __construct(Application $app, $use_caching = self::DONT_USE_CACHING)
 	{
 		$this->app = $app;
+		$this->use_caching = $use_caching;
 	}
 	// @codeCoverageIgnoreEnd
 
@@ -80,7 +89,7 @@ class ContainerProxy
 		$class = 'ApplicationContainer';
 		$pathname = ContainerPathname::from($app);
 
-		if (!file_exists($pathname))
+		if (!$this->use_caching || !file_exists($pathname))
 		{
 			$container = $this->create_container();
 			$this->dump_container($container, $pathname, $class);

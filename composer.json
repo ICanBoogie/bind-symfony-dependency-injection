@@ -6,7 +6,7 @@
 		"dependency",
 		"injection"
 	],
-	"homepage": "http://icanboogie.org/",
+	"homepage": "https://icanboogie.org/",
 	"license": "BSD-3-Clause",
 	"authors": [
 		{
@@ -40,19 +40,22 @@
 		}
 	},
 	"autoload-dev": {
-		"files": [
-			"tests/Application.php"
-		],
 		"psr-4": {
 			"ICanBoogie\\Binding\\SymfonyDependencyInjection\\": "tests/lib/"
-		}
+		},
+		"classmap": [
+			"tests/Application.php"
+		]
 	},
 	"scripts": {
 		"post-autoload-dump": "ICanBoogie\\Autoconfig\\Hooks::on_autoload_dump"
 	},
 	"extra": {
 		"icanboogie": {
-			"config-path": "config"
+			"config-path": "config",
+			"config-constructor": {
+				"container": "merge"
+			}
 		}
 	}
 }
