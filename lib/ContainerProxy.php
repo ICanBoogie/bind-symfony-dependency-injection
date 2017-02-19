@@ -13,6 +13,7 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Accessor\AccessorTrait;
 use ICanBoogie\Application;
+use ICanBoogie\Autoconfig\Autoconfig;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -180,7 +181,7 @@ class ContainerProxy
 	{
 		$collection = [];
 
-		foreach (array_keys($this->app->config['config-path']) as $path)
+		foreach (array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path)
 		{
 			$pathname = $path . DIRECTORY_SEPARATOR . self::CONFIG_FILENAME;
 
