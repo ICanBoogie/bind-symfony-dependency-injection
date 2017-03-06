@@ -1,10 +1,10 @@
 # bind-symfony-dependency-injection
 
 [![Release](https://img.shields.io/packagist/v/ICanBoogie/bind-symfony-dependency-injection.svg)](https://packagist.org/packages/ICanBoogie/bind-symfony-dependency-injection)
-[![Build Status](https://img.shields.io/travis/ICanBoogie/bind-symfony-dependency-injection/master.svg)](http://travis-ci.org/ICanBoogie/bind-symfony-dependency-injection)
+[![Build Status](https://img.shields.io/travis/ICanBoogie/bind-symfony-dependency-injection.svg)](http://travis-ci.org/ICanBoogie/bind-symfony-dependency-injection)
 [![HHVM](https://img.shields.io/hhvm/ICanBoogie/bind-symfony-dependency-injection.svg)](http://hhvm.h4cc.de/package/ICanBoogie/bind-symfony-dependency-injection)
-[![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/bind-symfony-dependency-injection/master.svg)](https://scrutinizer-ci.com/g/ICanBoogie/bind-symfony-dependency-injection)
-[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/bind-symfony-dependency-injection/master.svg)](https://coveralls.io/r/ICanBoogie/bind-symfony-dependency-injection)
+[![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/bind-symfony-dependency-injection.svg)](https://scrutinizer-ci.com/g/ICanBoogie/bind-symfony-dependency-injection)
+[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/bind-symfony-dependency-injection.svg)](https://coveralls.io/r/ICanBoogie/bind-symfony-dependency-injection)
 [![Packagist](https://img.shields.io/packagist/dt/ICanBoogie/bind-symfony-dependency-injection.svg)](https://packagist.org/packages/ICanBoogie/bind-symfony-dependency-injection)
 
 Together with [icanboogie/service][], this package binds [symfony/dependency-injection][] to
@@ -137,7 +137,7 @@ The package requires PHP 5.6 or later.
 The recommended way to install this package is through [Composer](http://getcomposer.org/):
 
 ```
-$ composer require ICanBoogie/bind-symfony-dependency-injection
+$ composer require icanboogie/bind-symfony-dependency-injection
 ```
 
 
@@ -176,8 +176,8 @@ clean` command.
 
 The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
-[![Build Status](https://img.shields.io/travis/ICanBoogie/bind-symfony-dependency-injection/master.svg)](http://travis-ci.org/ICanBoogie/bind-symfony-dependency-injection)
-[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/bind-symfony-dependency-injection/master.svg)](https://coveralls.io/r/ICanBoogie/bind-symfony-dependency-injection)
+[![Build Status](https://img.shields.io/travis/ICanBoogie/bind-symfony-dependency-injection.svg)](http://travis-ci.org/ICanBoogie/bind-symfony-dependency-injection)
+[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/bind-symfony-dependency-injection.svg)](https://coveralls.io/r/ICanBoogie/bind-symfony-dependency-injection)
 
 
 
