@@ -15,6 +15,9 @@ use ICanBoogie\Service\ServiceProvider;
 use ICanBoogie\Session;
 use Symfony\Component\DependencyInjection\Container;
 
+/**
+ * @group integration
+ */
 class ContainerProxyTest extends \PHPUnit_Framework_TestCase
 {
 	/**

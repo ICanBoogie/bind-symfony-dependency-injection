@@ -26,7 +26,7 @@ class Hooks
 	{
 		ServiceProvider::define(new ContainerProxy(
 			$app,
-			$app->configs[ContainerConfig::FRAGMENT_FOR_CONTAINER][ContainerConfig::USE_CACHING]
+			$app->configs[ContainerConfig::FRAGMENT_FOR_CONTAINER]
 		));
 	}
 	// @codeCoverageIgnoreEnd

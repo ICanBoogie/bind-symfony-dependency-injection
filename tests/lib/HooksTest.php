@@ -15,6 +15,9 @@ use ICanBoogie\Service\ServiceProvider;
 use Symfony\Component\DependencyInjection\Container;
 use function ICanBoogie\app;
 
+/**
+ * @group integration
+ */
 class HooksTest extends \PHPUnit_Framework_TestCase
 {
 	public function test_service_provider_should_be_defined_during_app_boot()

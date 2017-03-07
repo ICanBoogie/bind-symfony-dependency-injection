@@ -32,8 +32,6 @@ class ContainerProxy
 	const SERVICE_APP = 'app';
 	const SERVICE_CONTAINER = 'container';
 	const CONFIG_FILENAME = 'services.yml';
-	const USE_CACHING = true;
-	const DONT_USE_CACHING = false;
 
 	/**
 	 * @var Application
@@ -41,9 +39,9 @@ class ContainerProxy
 	private $app;
 
 	/**
-	 * @var bool
+	 * @var array
 	 */
-	private $use_caching;
+	private $config = [];
 
 	/**
 	 * @var Container
@@ -62,12 +60,12 @@ class ContainerProxy
 	 * @codeCoverageIgnoreStart
 	 *
 	 * @param Application $app
-	 * @param bool $use_caching
+	 * @param array $config
 	 */
-	public function __construct(Application $app, $use_caching = self::DONT_USE_CACHING)
+	public function __construct(Application $app, array $config)
 	{
 		$this->app = $app;
-		$this->use_caching = $use_caching;
+		$this->config = ContainerConfig::normalize($config);
 	}
 	// @codeCoverageIgnoreEnd
 
@@ -90,7 +88,7 @@ class ContainerProxy
 		$class = 'ApplicationContainer';
 		$pathname = ContainerPathname::from($app);
 
-		if (!$this->use_caching || !file_exists($pathname))
+		if (!$this->config[ContainerConfig::USE_CACHING] || !file_exists($pathname))
 		{
 			$container = $this->create_container();
 			$this->dump_container($container, $pathname, $class);
@@ -128,14 +126,14 @@ class ContainerProxy
 	 */
 	private function apply_extensions(ContainerBuilder $container)
 	{
-		$collection = $this->collection_extensions();
+		$extensions = $this->collect_extensions();
 
-		if (!$collection)
+		if (!$extensions)
 		{
 			return; // @codeCoverageIgnore
 		}
 
-		foreach ($collection as $extension)
+		foreach ($extensions as $extension)
 		{
 			$container->registerExtension($extension);
 			$container->loadFromExtension($extension->getAlias());
@@ -145,13 +143,17 @@ class ContainerProxy
 	/**
 	 * @return array
 	 */
-	private function collection_extensions()
+	private function collect_extensions()
 	{
-		return [
+		$app = $this->app;
+		$extensions = [];
 
-			new Extension\ApplicationExtension($this->app)
+		foreach ($this->config[ContainerConfig::EXTENSIONS] as $constructor)
+		{
+			$extensions[] = $constructor($app, $this);
+		}
 
-		];
+		return $extensions;
 	}
 
 	/**

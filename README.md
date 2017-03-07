@@ -99,20 +99,35 @@ $container = $proxy->container;
 
 ## Configuring the container
 
-The container is configured using `container` configuration fragments. Currently, only the
-[`USE_CACHING`][] constant is defined:
+The container is configured using `container` configuration fragments:
 
 ```php
 <?php
+
+// config/container.php
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 return [
 
-	ContainerConfig::USE_CACHING => true
+	ContainerConfig::USE_CACHING => false,
+	ContainerConfig::EXTENSIONS => [
+
+		[ Extension\ApplicationExtension::class, 'from' ]
+
+	]
 
 ];
 ```
+
+
+
+
+
+### Defining container extensions
+
+Container extensions are defined using [`EXTENSIONS`][]. Use an array of key/value pairs where _key_
+is an optional identifier and _value_ a callable that constructs the extension.
 
 
 
@@ -194,6 +209,7 @@ The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
 [ContainerProxy]:               https://icanboogie.org/api/bind-symfony-dependency-injection/master/
 [`USE_CACHING`]:                https://icanboogie.org/api/bind-symfony-dependency-injection/master/class-ICanBoogie.Binding.SymfonyDependencyInjection.ContainerConfig.html#USE_CACHING
+[`EXTENSIONS`]:                 https://icanboogie.org/api/bind-symfony-dependency-injection/master/class-ICanBoogie.Binding.SymfonyDependencyInjection.ContainerConfig.html#EXTENSIONS
 [documentation]:                https://icanboogie.org/api/service/master/
 
 [ICanBoogie]:                   https://icanboogie.org

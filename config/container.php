@@ -13,6 +13,11 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 return [
 
-	ContainerConfig::USE_CACHING => false
+	ContainerConfig::USE_CACHING => false,
+	ContainerConfig::EXTENSIONS => [
+
+		[ Extension\ApplicationExtension::class, 'from' ]
+
+	]
 
 ];

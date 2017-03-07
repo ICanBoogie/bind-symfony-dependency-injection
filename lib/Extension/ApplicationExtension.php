@@ -23,6 +23,18 @@ class ApplicationExtension extends Extension
 	const LAZY_GETTER_PREFIX = 'lazy_get_';
 
 	/**
+	 * Create a new instance.
+	 *
+	 * @param Application $app
+	 *
+	 * @return static
+	 */
+	static public function from(Application $app)
+	{
+		return new static($app);
+	}
+
+	/**
 	 * @var Application
 	 */
 	private $app;

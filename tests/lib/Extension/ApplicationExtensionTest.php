@@ -14,6 +14,9 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection\Extension;
 use function ICanBoogie\app;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
+/**
+ * @group integration
+ */
 class ApplicationExtensionTest extends \PHPUnit_Framework_TestCase
 {
 	const SERVICES = 'app container dispatcher events initial_request logger request routes session';
