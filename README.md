@@ -56,7 +56,16 @@ Usually, ICanBoogie's components add getters to `ICanBoogie\Application` instanc
 [prototype system][], which means you can access the initial request using `$app->initial_request`
 or the session using `$app->session`. Services defined this way are automatically accessible through
 the container as well, which means they can be used as references `ref('session')` or obtained
-through the container `$app->container['session']`.
+through the container `$app->container->get('session')`.
+
+
+
+
+
+### Obtaining config parameters
+
+All application config parameters are available as container parameters e.g.
+`$app->container->getParameter('repository.cache`)`.
 
 
 

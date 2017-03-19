@@ -58,6 +58,27 @@ class ApplicationExtension extends Extension
 				->setSynthetic(true)
 		);
 
+		$this->add_parameters($container);
+		$this->add_services($container);
+	}
+
+	/**
+	 * @param ContainerBuilder $container
+	 */
+	private function add_parameters(ContainerBuilder $container)
+	{
+		foreach ($this->app->config as $param => $value)
+		{
+			$param = $this->normalize_param($param);
+			$container->setParameter($param, $value);
+		}
+	}
+
+	/**
+	 * @param ContainerBuilder $container
+	 */
+	private function add_services(ContainerBuilder $container)
+	{
 		foreach ($this->app->prototype as $method => $callable)
 		{
 			if (strpos($method, self::LAZY_GETTER_PREFIX) === 0)
@@ -79,5 +100,21 @@ class ApplicationExtension extends Extension
 
 			$container->setDefinition($id, $definition);
 		}
+	}
+
+	/**
+	 * @param string $param
+	 *
+	 * @return string
+	 */
+	private function normalize_param($param)
+	{
+		return strtr($param, [
+
+			' ' => '.',
+			'/' => '.',
+			'-' => '_',
+
+		]);
 	}
 }
