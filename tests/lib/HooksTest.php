@@ -18,7 +18,7 @@ use function ICanBoogie\app;
 /**
  * @group integration
  */
-class HooksTest extends \PHPUnit_Framework_TestCase
+class HooksTest extends \PHPUnit\Framework\TestCase
 {
 	public function test_service_provider_should_be_defined_during_app_boot()
 	{

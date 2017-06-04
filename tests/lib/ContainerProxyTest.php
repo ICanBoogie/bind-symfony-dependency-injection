@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\Container;
 /**
  * @group integration
  */
-class ContainerProxyTest extends \PHPUnit_Framework_TestCase
+class ContainerProxyTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var ContainerProxy

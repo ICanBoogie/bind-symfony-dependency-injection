@@ -18,7 +18,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 /**
  * @group integration
  */
-class ApplicationExtensionTest extends \PHPUnit_Framework_TestCase
+class ApplicationExtensionTest extends \PHPUnit\Framework\TestCase
 {
 	/**
 	 * @var Container
