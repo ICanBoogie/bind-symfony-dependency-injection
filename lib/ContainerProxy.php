@@ -76,7 +76,13 @@ class ContainerProxy
 	 */
 	public function __invoke($id)
 	{
-		return $this->get_container()->get($id);
+		$container = $this->get_container();
+
+		if ($id === self::SERVICE_CONTAINER) {
+			return $container;
+		}
+
+		return $container->get($id);
 	}
 
 	/**
@@ -100,7 +106,6 @@ class ContainerProxy
 
 		$container = new $class();
 		$container->set(self::SERVICE_APP, $app);
-		$container->set(self::SERVICE_CONTAINER, $container);
 
 		return $container;
 	}

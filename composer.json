@@ -27,9 +27,9 @@
 		"php": ">=5.6",
 		"icanboogie/icanboogie": "^4.0",
 		"icanboogie/service": "dev-master",
-		"symfony/dependency-injection": "^3.2",
-		"symfony/config": "^3.2",
-		"symfony/yaml": "^3.2"
+		"symfony/dependency-injection": "^3.3",
+		"symfony/config": "^3.3",
+		"symfony/yaml": "^3.3"
 	},
 	"autoload": {
 		"psr-4": {
