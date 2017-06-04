@@ -28,24 +28,17 @@ class HooksTest extends \PHPUnit\Framework\TestCase
 	public function test_compiled_container_should_be_deleted_on_app_clear_cache()
 	{
 		$app = app();
-		$pathname = ContainerPathname::from($app);
+		$pathname = (string) ContainerPathname::from($app);
 
 		if (!file_exists($pathname))
 		{
 			$app->container;
 
-			if (!file_exists($pathname))
-			{
-				$this->fail("Compiled container should have been created: $pathname");
-			}
+			$this->assertFileExists($pathname);
 		}
 
 		$app->clear_cache();
-
-		if (file_exists($pathname))
-		{
-			$this->fail("Compiled container should have been deleted: $pathname");
-		}
+		$this->assertFileNotExists($pathname);
 
 		// should be fine too
 		$app->clear_cache();
