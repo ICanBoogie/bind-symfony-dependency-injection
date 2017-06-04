@@ -88,7 +88,6 @@ config_constructor
 config_path
 error_handler
 locale_path
-module_path
 repository
 repository.cache
 repository.cache.configs
