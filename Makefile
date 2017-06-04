@@ -2,8 +2,8 @@
 
 PACKAGE_NAME = icanboogie/bind-symfony-dependency-injection
 PACKAGE_VERSION = 0.1
-PHPUNIT_VERSION = phpunit-5.7.phar
-PHPUNIT_FILENAME = build/$(PHPUNIT_VERSION)
+PHPUNIT_PHAR = phpunit-$(shell php phpunit-version.php).phar
+PHPUNIT_FILENAME = build/$(PHPUNIT_PHAR)
 PHPUNIT = php $(PHPUNIT_FILENAME)
 
 # do not edit the following lines
@@ -24,7 +24,7 @@ autoload: vendor
 
 $(PHPUNIT_FILENAME):
 	mkdir -p build
-	wget https://phar.phpunit.de/$(PHPUNIT_VERSION) -O $(PHPUNIT_FILENAME)
+	wget https://phar.phpunit.de/$(PHPUNIT_PHAR) -O $(PHPUNIT_FILENAME)
 
 test: all
 	@$(PHPUNIT)
