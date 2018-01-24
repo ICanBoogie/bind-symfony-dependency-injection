@@ -56,6 +56,7 @@ class ApplicationExtension extends Extension
 			'app',
 			(new Definition(Application::class))
 				->setSynthetic(true)
+				->setPublic(true)
 		);
 
 		$this->add_parameters($container);
@@ -96,7 +97,8 @@ class ApplicationExtension extends Extension
 
 			$definition = (new Definition('ICanBoogie\Dummy' . uniqid()))
 				->setFactory([ new Reference('app'), '__get' ])
-				->setArguments([ $id ]);
+				->setArguments([ $id ])
+				->setPublic(true);
 
 			$container->setDefinition($id, $definition);
 		}

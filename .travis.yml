@@ -8,6 +8,11 @@ cache:
 
 language: php
 
+matrix:
+  include:
+    - env: COMPOSER_PREFER_LOWER=""
+    - env: COMPOSER_PREFER_LOWER="--prefer-lowest"
+
 php:
   - 5.6
   - 7.0
