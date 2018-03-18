@@ -2,8 +2,10 @@ services:
 
   service_a:
     class: ICanBoogie\Binding\SymfonyDependencyInjection\ServiceA
+    public: true
 
   service_b:
     class: ICanBoogie\Binding\SymfonyDependencyInjection\ServiceB
     arguments:
       - "@service_a"
+    public: true

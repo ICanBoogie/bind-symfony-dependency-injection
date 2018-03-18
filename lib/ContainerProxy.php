@@ -15,15 +15,15 @@ use ICanBoogie\Accessor\AccessorTrait;
 use ICanBoogie\Application;
 use ICanBoogie\Autoconfig\Autoconfig;
 use Symfony\Component\Config\FileLocator;
-use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 /**
  * Proxy to Symfony container.
  *
- * @property-read Container $container
+ * @property-read ContainerInterface $container
  */
 class ContainerProxy
 {
@@ -44,24 +44,16 @@ class ContainerProxy
 	private $config = [];
 
 	/**
-	 * @var Container
+	 * @var ContainerInterface
 	 */
 	private $container;
 
-	/**
-	 * @return Container
-	 */
 	protected function get_container()
 	{
 		return $this->container ?: $this->container = $this->instantiate_container();
 	}
 
-	/**
-	 * @codeCoverageIgnoreStart
-	 *
-	 * @param Application $app
-	 * @param array $config
-	 */
+	// @codeCoverageIgnoreStart
 	public function __construct(Application $app, array $config)
 	{
 		$this->app = $app;
@@ -69,12 +61,7 @@ class ContainerProxy
 	}
 	// @codeCoverageIgnoreEnd
 
-	/**
-	 * @param string $id Service identifier
-	 *
-	 * @return object
-	 */
-	public function __invoke($id)
+	public function __invoke(string $id): object
 	{
 		$container = $this->get_container();
 
@@ -85,10 +72,7 @@ class ContainerProxy
 		return $container->get($id);
 	}
 
-	/**
-	 * @return ContainerBuilder
-	 */
-	private function instantiate_container()
+	private function instantiate_container(): ContainerInterface
 	{
 		$app = $this->app;
 		$class = 'ApplicationContainer';
@@ -96,13 +80,13 @@ class ContainerProxy
 
 		if (!$this->config[ContainerConfig::USE_CACHING] || !file_exists($pathname))
 		{
-			$container = $this->create_container();
+			$container = $this->create_container_builder();
 			$this->dump_container($container, $pathname, $class);
 		}
 
 		require $pathname;
 
-		/* @var $container ContainerBuilder */
+		/* @var $container ContainerInterface */
 
 		$container = new $class();
 		$container->set(self::SERVICE_APP, $app);
@@ -110,10 +94,7 @@ class ContainerProxy
 		return $container;
 	}
 
-	/**
-	 * @return ContainerBuilder
-	 */
-	private function create_container()
+	private function create_container_builder(): ContainerBuilder
 	{
 		$container = new ContainerBuilder();
 
@@ -126,10 +107,7 @@ class ContainerProxy
 		return $container;
 	}
 
-	/**
-	 * @param ContainerBuilder $container
-	 */
-	private function apply_extensions(ContainerBuilder $container)
+	private function apply_extensions(ContainerBuilder $container): void
 	{
 		$extensions = $this->collect_extensions();
 
@@ -145,10 +123,7 @@ class ContainerProxy
 		}
 	}
 
-	/**
-	 * @return array
-	 */
-	private function collect_extensions()
+	private function collect_extensions(): array
 	{
 		$app = $this->app;
 		$extensions = [];
@@ -161,10 +136,7 @@ class ContainerProxy
 		return $extensions;
 	}
 
-	/**
-	 * @param ContainerBuilder $container
-	 */
-	private function apply_services(ContainerBuilder $container)
+	private function apply_services(ContainerBuilder $container): void
 	{
 		$collection = $this->collect_services();
 
@@ -173,7 +145,7 @@ class ContainerProxy
 			return; // @codeCoverageIgnore
 		}
 
-		$loader = new YamlFileLoader($container, new FileLocator(getcwd()));
+		$loader = new YamlFileLoader($container, new FileLocator(\getcwd()));
 
 		foreach ($collection as $service_pathname)
 		{
@@ -181,18 +153,15 @@ class ContainerProxy
 		}
 	}
 
-	/**
-	 * @return array
-	 */
-	private function collect_services()
+	private function collect_services(): array
 	{
 		$collection = [];
 
-		foreach (array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path)
+		foreach (\array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path)
 		{
 			$pathname = $path . DIRECTORY_SEPARATOR . self::CONFIG_FILENAME;
 
-			if (!file_exists($pathname))
+			if (!\file_exists($pathname))
 			{
 				continue;
 			}
@@ -203,15 +172,10 @@ class ContainerProxy
 		return $collection;
 	}
 
-	/**
-	 * @param ContainerBuilder $container
-	 * @param ContainerPathname $pathname
-	 * @param string $class
-	 */
-	private function dump_container(ContainerBuilder $container, ContainerPathname $pathname, $class)
+	private function dump_container(ContainerBuilder $container, ContainerPathname $pathname, string $class): void
 	{
 		$dumper = new PhpDumper($container);
 
-		file_put_contents($pathname, $dumper->dump([ 'class' => $class ]));
+		\file_put_contents($pathname, $dumper->dump([ 'class' => $class ]));
 	}
 }

@@ -11,10 +11,10 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
-use Symfony\Component\DependencyInjection\Container;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * @property-read Container $container
+ * @property-read ContainerInterface $container
  */
 trait ApplicationBindings
 {

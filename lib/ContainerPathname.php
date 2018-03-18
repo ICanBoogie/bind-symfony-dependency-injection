@@ -26,7 +26,7 @@ final class ContainerPathname
 	 *
 	 * @return ContainerPathname
 	 */
-	static public function from(Application $app)
+	static public function from(Application $app): self
 	{
 		return new self($app->config[AppConfig::REPOSITORY_CACHE] . DIRECTORY_SEPARATOR . self::FILENAME);
 	}
@@ -36,18 +36,12 @@ final class ContainerPathname
 	 */
 	private $pathname;
 
-	/**
-	 * @param string $pathname
-	 */
-	private function __construct($pathname)
+	private function __construct(string $pathname)
 	{
 		$this->pathname = $pathname;
 	}
 
-	/**
-	 * @return string
-	 */
-	public function __toString()
+	public function __toString(): string
 	{
 		return $this->pathname;
 	}

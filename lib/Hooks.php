@@ -13,16 +13,16 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
 use ICanBoogie\Service\ServiceProvider;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class Hooks
 {
-	/**
-	 * @codeCoverageIgnoreStart
-	 *
-	 * @param Application\BootEvent $event
-	 * @param Application $app
+	/*
+	 * Prototype methods
 	 */
-	static public function on_app_boot(Application\BootEvent $event, Application $app)
+
+	// @codeCoverageIgnoreStart
+	static public function on_app_boot(Application\BootEvent $event, Application $app): void
 	{
 		ServiceProvider::define(new ContainerProxy(
 			$app,
@@ -31,28 +31,23 @@ class Hooks
 	}
 	// @codeCoverageIgnoreEnd
 
-	/**
-	 * @param Application\ClearCacheEvent $event
-	 * @param Application $app
-	 */
-	static public function on_app_clear_cache(Application\ClearCacheEvent $event, Application $app)
+	static public function on_app_clear_cache(Application\ClearCacheEvent $event, Application $app): void
 	{
 		$pathname = ContainerPathname::from($app);
 
-		if (!file_exists($pathname))
+		if (!\file_exists($pathname))
 		{
 			return;
 		}
 
-		unlink($pathname);
+		\unlink($pathname);
 	}
 
-	/**
-	 * @param Application $app
-	 *
-	 * @return callable|null
+	/*
+	 * Prototype accessors
 	 */
-	static public function app_get_container(Application $app)
+
+	static public function app_get_container(Application $app): ContainerInterface
 	{
 		return ServiceProvider::provide(ContainerProxy::SERVICE_CONTAINER);
 	}

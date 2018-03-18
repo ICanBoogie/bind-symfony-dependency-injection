@@ -29,7 +29,7 @@ class ApplicationExtension extends Extension
 	 *
 	 * @return static
 	 */
-	static public function from(Application $app)
+	static public function from(Application $app): self
 	{
 		return new static($app);
 	}
@@ -62,10 +62,7 @@ class ApplicationExtension extends Extension
 		$this->add_services($container);
 	}
 
-	/**
-	 * @param ContainerBuilder $container
-	 */
-	private function add_parameters(ContainerBuilder $container)
+	private function add_parameters(ContainerBuilder $container): void
 	{
 		foreach ($this->app->config as $param => $value)
 		{
@@ -74,20 +71,17 @@ class ApplicationExtension extends Extension
 		}
 	}
 
-	/**
-	 * @param ContainerBuilder $container
-	 */
-	private function add_services(ContainerBuilder $container)
+	private function add_services(ContainerBuilder $container): void
 	{
 		foreach ($this->app->prototype as $method => $callable)
 		{
-			if (strpos($method, self::LAZY_GETTER_PREFIX) === 0)
+			if (\strpos($method, self::LAZY_GETTER_PREFIX) === 0)
 			{
-				$id = substr($method, strlen(self::LAZY_GETTER_PREFIX));
+				$id = \substr($method, \strlen(self::LAZY_GETTER_PREFIX));
 			}
-			elseif (strpos($method, self::GETTER_PREFIX) === 0)
+			elseif (\strpos($method, self::GETTER_PREFIX) === 0)
 			{
-				$id = substr($method, strlen(self::GETTER_PREFIX));
+				$id = \substr($method, \strlen(self::GETTER_PREFIX));
 			}
 			else
 			{
@@ -96,20 +90,16 @@ class ApplicationExtension extends Extension
 
 			$definition = (new Definition('ICanBoogie\Dummy' . uniqid()))
 				->setFactory([ new Reference('app'), '__get' ])
-				->setArguments([ $id ]);
+				->setArguments([ $id ])
+				->setPublic(true);
 
 			$container->setDefinition($id, $definition);
 		}
 	}
 
-	/**
-	 * @param string $param
-	 *
-	 * @return string
-	 */
-	private function normalize_param($param)
+	private function normalize_param(string $param): string
 	{
-		return strtr($param, [
+		return \strtr($param, [
 
 			' ' => '.',
 			'/' => '.',

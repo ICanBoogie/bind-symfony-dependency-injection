@@ -35,12 +35,7 @@ class ContainerConfig
 	 */
 	const EXTENSIONS = 'extensions';
 
-	/**
-	 * @param array $fragments
-	 *
-	 * @return array
-	 */
-	static public function synthesize(array $fragments)
+	static public function synthesize(array $fragments): array
 	{
 		$use_caching = false;
 		$extensions = [];
@@ -60,7 +55,7 @@ class ContainerConfig
 
 		if ($extensions)
 		{
-			$extensions = array_merge(...$extensions);
+			$extensions = \array_merge(...$extensions);
 		}
 
 		return [
@@ -71,12 +66,7 @@ class ContainerConfig
 		];
 	}
 
-	/**
-	 * @param array $config
-	 *
-	 * @return array
-	 */
-	static public function normalize(array $config)
+	static public function normalize(array $config): array
 	{
 		return $config + [
 

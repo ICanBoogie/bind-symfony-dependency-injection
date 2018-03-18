@@ -5,3 +5,4 @@ services:
     arguments:
       - "@service_a"
       - "@service_b"
+    public: true

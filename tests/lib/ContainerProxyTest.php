@@ -11,8 +11,8 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
+use ICanBoogie\Application;
 use ICanBoogie\Service\ServiceProvider;
-use ICanBoogie\Session;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
@@ -45,7 +45,7 @@ class ContainerProxyTest extends \PHPUnit\Framework\TestCase
 	public function testInvoke()
 	{
 		$proxy = $this->proxy;
-		$this->assertInstanceOf(Session::class, $proxy('session'));
+		$this->assertInstanceOf(Application::class, $proxy('app'));
 	}
 
 	public function testServices()
