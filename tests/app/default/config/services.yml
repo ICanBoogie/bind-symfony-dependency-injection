@@ -6,3 +6,7 @@ services:
       - "@service_a"
       - "@service_b"
     public: true
+
+  public.app.vars:
+    alias: app.vars
+    public: true

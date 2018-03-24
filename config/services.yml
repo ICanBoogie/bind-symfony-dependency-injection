@@ -1,0 +1,6 @@
+services:
+
+  app.vars:
+    class: ICanBoogie\Storage\Storage
+    factory: [ ICanBoogie\Binding\SymfonyDependencyInjection\ServiceAccessor, get ]
+    arguments: [ vars ]
