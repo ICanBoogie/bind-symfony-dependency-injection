@@ -11,7 +11,7 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
 
 /**
  * @property-read ContainerInterface $container

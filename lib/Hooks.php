@@ -13,9 +13,11 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
 use ICanBoogie\Service\ServiceProvider;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Psr\Container\ContainerInterface;
+use function file_exists;
+use function unlink;
 
-class Hooks
+final class Hooks
 {
 	/*
 	 * Prototype methods
@@ -35,12 +37,12 @@ class Hooks
 	{
 		$pathname = ContainerPathname::from($app);
 
-		if (!\file_exists($pathname))
+		if (!file_exists($pathname))
 		{
 			return;
 		}
 
-		\unlink($pathname);
+		unlink($pathname);
 	}
 
 	/*
@@ -49,6 +51,6 @@ class Hooks
 
 	static public function app_get_container(Application $app): ContainerInterface
 	{
-		return ServiceProvider::provide(ContainerProxy::SERVICE_CONTAINER);
+		return ServiceProvider::provide(ContainerProxy::ALIAS_CONTAINER);
 	}
 }

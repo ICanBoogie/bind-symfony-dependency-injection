@@ -14,6 +14,8 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection\Extension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use function array_map;
+use function explode;
 use function ICanBoogie\app;
 
 /**

@@ -11,12 +11,12 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
-class ContainerConfig
+final class ContainerConfig
 {
 	/**
 	 * Fragment name for the container configuration.
 	 */
-	const FRAGMENT_FOR_CONTAINER = 'container';
+	public const FRAGMENT_FOR_CONTAINER = 'container';
 
 	/**
 	 * Whether the compiled container should be cached.
@@ -25,7 +25,7 @@ class ContainerConfig
 	 * You can use `icanboogie clear cache` or delete the file for the compiled container to
 	 * be updated.
 	 */
-	const USE_CACHING = 'use_caching';
+	public const USE_CACHING = 'use_caching';
 
 	/**
 	 * Define container extensions using an array of key/value pairs, where _key_ is an identifier
@@ -33,7 +33,7 @@ class ContainerConfig
 	 *
 	 *     \Symfony\Component\DependencyInjection\Extension\ExtensionInterface (\ICanBoogie\Application $app)
 	 */
-	const EXTENSIONS = 'extensions';
+	public const EXTENSIONS = 'extensions';
 
 	static public function synthesize(array $fragments): array
 	{

@@ -19,9 +19,6 @@ final class ServiceIntegrationTest extends TestCase
 {
 	/**
 	 * @dataProvider provideService
-	 *
-	 * @param string $service_id
-	 * @param string $service_class
 	 */
 	public function testService(string $service_id, string $service_class)
 	{

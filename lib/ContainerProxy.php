@@ -14,24 +14,30 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 use ICanBoogie\Accessor\AccessorTrait;
 use ICanBoogie\Application;
 use ICanBoogie\Autoconfig\Autoconfig;
+use ICanBoogie\Binding\SymfonyDependencyInjection\Extension\ApplicationExtension;
+use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
+use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use function array_keys;
+use function file_exists;
+use function file_put_contents;
+use function getcwd;
 
 /**
  * Proxy to Symfony container.
  *
  * @property-read ContainerInterface $container
  */
-class ContainerProxy
+final class ContainerProxy
 {
 	use AccessorTrait;
 
-	const SERVICE_APP = 'app';
-	const SERVICE_CONTAINER = 'container';
-	const CONFIG_FILENAME = 'services.yml';
+	public const ALIAS_APP = ApplicationExtension::APP_SERVICE;
+	public const ALIAS_CONTAINER = 'container';
+	private const CONFIG_FILENAME = 'services.yml';
 
 	/**
 	 * @var Application
@@ -63,13 +69,11 @@ class ContainerProxy
 
 	public function __invoke(string $id): object
 	{
-		$container = $this->get_container();
-
-		if ($id === self::SERVICE_CONTAINER) {
-			return $container;
+		switch ($id) {
+			case self::ALIAS_APP: return $this->app;
+			case self::ALIAS_CONTAINER: return $this->get_container();
+			default: return $this->get_container()->get($id);
 		}
-
-		return $container->get($id);
 	}
 
 	private function instantiate_container(): ContainerInterface
@@ -81,15 +85,16 @@ class ContainerProxy
 		if (!$this->config[ContainerConfig::USE_CACHING] || !file_exists($pathname))
 		{
 			$container = $this->create_container_builder();
+			$container->compile();
 			$this->dump_container($container, $pathname, $class);
 		}
 
 		require $pathname;
 
-		/* @var $container ContainerInterface */
+		/* @var $container \Symfony\Component\DependencyInjection\ContainerInterface */
 
 		$container = new $class();
-		$container->set(self::SERVICE_APP, $app);
+		$container->set(self::ALIAS_APP, $app);
 
 		return $container;
 	}
@@ -101,28 +106,21 @@ class ContainerProxy
 		$this->apply_extensions($container);
 		$this->apply_services($container);
 
-		$container->compile();
-		$container->set(self::SERVICE_APP, $this->app);
-
 		return $container;
 	}
 
 	private function apply_extensions(ContainerBuilder $container): void
 	{
-		$extensions = $this->collect_extensions();
-
-		if (!$extensions)
-		{
-			return; // @codeCoverageIgnore
-		}
-
-		foreach ($extensions as $extension)
+		foreach ($this->collect_extensions() as $extension)
 		{
 			$container->registerExtension($extension);
 			$container->loadFromExtension($extension->getAlias());
 		}
 	}
 
+	/**
+	 * @return Extension[]
+	 */
 	private function collect_extensions(): array
 	{
 		$app = $this->app;
@@ -145,7 +143,7 @@ class ContainerProxy
 			return; // @codeCoverageIgnore
 		}
 
-		$loader = new YamlFileLoader($container, new FileLocator(\getcwd()));
+		$loader = new YamlFileLoader($container, new FileLocator(getcwd()));
 
 		foreach ($collection as $service_pathname)
 		{
@@ -157,11 +155,11 @@ class ContainerProxy
 	{
 		$collection = [];
 
-		foreach (\array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path)
+		foreach (array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path)
 		{
 			$pathname = $path . DIRECTORY_SEPARATOR . self::CONFIG_FILENAME;
 
-			if (!\file_exists($pathname))
+			if (!file_exists($pathname))
 			{
 				continue;
 			}
@@ -176,6 +174,6 @@ class ContainerProxy
 	{
 		$dumper = new PhpDumper($container);
 
-		\file_put_contents($pathname, $dumper->dump([ 'class' => $class ]));
+		file_put_contents($pathname, $dumper->dump([ 'class' => $class ]));
 	}
 }

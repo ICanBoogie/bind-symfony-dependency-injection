@@ -19,13 +19,8 @@ use ICanBoogie\Application;
  */
 final class ContainerPathname
 {
-	const FILENAME = 'container-compiled.php';
+	private const FILENAME = 'container-compiled.php';
 
-	/**
-	 * @param Application $app
-	 *
-	 * @return ContainerPathname
-	 */
 	static public function from(Application $app): self
 	{
 		return new self($app->config[AppConfig::REPOSITORY_CACHE] . DIRECTORY_SEPARATOR . self::FILENAME);

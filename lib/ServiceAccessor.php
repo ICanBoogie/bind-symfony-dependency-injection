@@ -13,7 +13,7 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use function ICanBoogie\app;
 
-class ServiceAccessor
+final class ServiceAccessor
 {
 	static public function get(string $id): object
 	{

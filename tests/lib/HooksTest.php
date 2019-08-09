@@ -11,10 +11,12 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
+use ICanBoogie\Application;
 use ICanBoogie\Service\ServiceProvider;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use function ICanBoogie\app;
+use function var_dump;
 
 /**
  * @group integration
@@ -48,5 +50,10 @@ class HooksTest extends TestCase
 	public function test_app_container_getter()
 	{
 		$this->assertInstanceOf(Container::class, app()->container);
+	}
+
+	public function test_get_app()
+	{
+		$this->assertSame(app(), app()->container->get('app'));
 	}
 }

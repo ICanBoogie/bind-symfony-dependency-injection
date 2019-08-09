@@ -11,6 +11,11 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
+/**
+ * @uses Hooks::on_app_boot
+ * @uses Hooks::on_app_clear_cache
+ */
+
 $hooks = Hooks::class . '::';
 
 return [

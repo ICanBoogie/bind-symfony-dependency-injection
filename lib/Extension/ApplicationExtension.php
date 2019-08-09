@@ -16,18 +16,20 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Reference;
+use function strlen;
+use function strpos;
+use function strtr;
+use function substr;
+use function uniqid;
 
-class ApplicationExtension extends Extension
+final class ApplicationExtension extends Extension
 {
-	const GETTER_PREFIX = 'get_';
-	const LAZY_GETTER_PREFIX = 'lazy_get_';
+	public const APP_SERVICE = 'app';
+	private const GETTER_PREFIX = 'get_';
+	private const LAZY_GETTER_PREFIX = 'lazy_get_';
 
 	/**
 	 * Create a new instance.
-	 *
-	 * @param Application $app
-	 *
-	 * @return static
 	 */
 	static public function from(Application $app): self
 	{
@@ -39,9 +41,6 @@ class ApplicationExtension extends Extension
 	 */
 	private $app;
 
-	/**
-	 * @param Application $app
-	 */
 	public function __construct(Application $app)
 	{
 		$this->app = $app;
@@ -53,10 +52,14 @@ class ApplicationExtension extends Extension
 	public function load(array $configs, ContainerBuilder $container)
 	{
 		$container->setDefinition(
-			'app',
+			self::APP_SERVICE,
 			(new Definition(Application::class))
 				->setSynthetic(true)
+				->setPublic(true)
 		);
+
+		$container
+			->setAlias(Application::class, self::APP_SERVICE);
 
 		$this->add_parameters($container);
 		$this->add_services($container);
@@ -75,13 +78,13 @@ class ApplicationExtension extends Extension
 	{
 		foreach ($this->app->prototype as $method => $callable)
 		{
-			if (\strpos($method, self::LAZY_GETTER_PREFIX) === 0)
+			if (strpos($method, self::LAZY_GETTER_PREFIX) === 0)
 			{
-				$id = \substr($method, \strlen(self::LAZY_GETTER_PREFIX));
+				$id = substr($method, strlen(self::LAZY_GETTER_PREFIX));
 			}
-			elseif (\strpos($method, self::GETTER_PREFIX) === 0)
+			elseif (strpos($method, self::GETTER_PREFIX) === 0)
 			{
-				$id = \substr($method, \strlen(self::GETTER_PREFIX));
+				$id = substr($method, strlen(self::GETTER_PREFIX));
 			}
 			else
 			{
@@ -89,7 +92,7 @@ class ApplicationExtension extends Extension
 			}
 
 			$definition = (new Definition('ICanBoogie\Dummy' . uniqid()))
-				->setFactory([ new Reference('app'), '__get' ])
+				->setFactory([ new Reference(Application::class), '__get' ])
 				->setArguments([ $id ])
 				->setPublic(true);
 
@@ -99,7 +102,7 @@ class ApplicationExtension extends Extension
 
 	private function normalize_param(string $param): string
 	{
-		return \strtr($param, [
+		return strtr($param, [
 
 			' ' => '.',
 			'/' => '.',

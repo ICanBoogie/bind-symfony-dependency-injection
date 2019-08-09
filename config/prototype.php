@@ -11,6 +11,10 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
+/**
+ * @uses Hooks::app_get_container
+ */
+
 $hooks = Hooks::class . '::';
 
 return [
