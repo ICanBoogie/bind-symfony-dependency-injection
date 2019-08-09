@@ -11,10 +11,12 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
+use PHPUnit\Framework\TestCase;
+
 /**
  * @group unit
  */
-class ContainerConfigTest extends \PHPUnit\Framework\TestCase
+final class ContainerConfigTest extends TestCase
 {
 	public function test_should_synthesize_container_config()
 	{

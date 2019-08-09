@@ -13,19 +13,20 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
 use ICanBoogie\Service\ServiceProvider;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 
 /**
  * @group integration
  */
-class ContainerProxyTest extends \PHPUnit\Framework\TestCase
+final class ContainerProxyTest extends TestCase
 {
 	/**
 	 * @var ContainerProxy
 	 */
 	private $proxy;
 
-	public function setUp()
+	protected function setUp(): void
 	{
 		$proxy = &$this->proxy;
 

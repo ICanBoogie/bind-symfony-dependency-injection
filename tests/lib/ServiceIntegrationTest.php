@@ -15,7 +15,7 @@ use ICanBoogie\Storage\Storage;
 use PHPUnit\Framework\TestCase;
 use function ICanBoogie\app;
 
-class ServiceIntegrationTest extends TestCase
+final class ServiceIntegrationTest extends TestCase
 {
 	/**
 	 * @dataProvider provideService

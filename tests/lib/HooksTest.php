@@ -12,13 +12,14 @@
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Service\ServiceProvider;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use function ICanBoogie\app;
 
 /**
  * @group integration
  */
-class HooksTest extends \PHPUnit\Framework\TestCase
+class HooksTest extends TestCase
 {
 	public function test_service_provider_should_be_defined_during_app_boot()
 	{

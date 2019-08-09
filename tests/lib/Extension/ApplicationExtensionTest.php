@@ -11,21 +11,22 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection\Extension;
 
-use function ICanBoogie\app;
+use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use function ICanBoogie\app;
 
 /**
  * @group integration
  */
-class ApplicationExtensionTest extends \PHPUnit\Framework\TestCase
+final class ApplicationExtensionTest extends TestCase
 {
 	/**
 	 * @var Container
 	 */
 	private $container;
 
-	public function setUp()
+	protected function setUp(): void
 	{
 		$container = &$this->container;
 

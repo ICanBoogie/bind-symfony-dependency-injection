@@ -22,9 +22,8 @@
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
-	"prefer-dist": true,
 	"require": {
-		"php": "^7.2",
+		"php": ">=7.2",
 		"icanboogie/icanboogie": "^5.0",
 		"icanboogie/service": "dev-master",
 		"symfony/dependency-injection": "^4.0",
