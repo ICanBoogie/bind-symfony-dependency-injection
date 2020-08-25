@@ -1,7 +1,7 @@
 # customization
 
 PACKAGE_NAME = icanboogie/bind-symfony-dependency-injection
-PACKAGE_VERSION = 5.0
+PACKAGE_VERSION = 6.0
 PHPUNIT_VERSION = phpunit-8.phar
 PHPUNIT_FILENAME = build/$(PHPUNIT_VERSION)
 PHPUNIT = php $(PHPUNIT_FILENAME)
@@ -24,14 +24,15 @@ test-dependencies: vendor $(PHPUNIT_FILENAME)
 
 $(PHPUNIT_FILENAME):
 	mkdir -p build
-	wget https://phar.phpunit.de/$(PHPUNIT_VERSION) -O $(PHPUNIT_FILENAME) -q
+	curl -sL https://phar.phpunit.de/$(PHPUNIT_VERSION) -o $(PHPUNIT_FILENAME)
+	chmod +x $(PHPUNIT_FILENAME)
 
 test: test-dependencies
 	@$(PHPUNIT)
 
 test-coverage: test-dependencies
 	@mkdir -p build/coverage
-	@$(PHPUNIT) --coverage-html ../build/coverage
+	@$(PHPUNIT) --coverage-html ../build/coverage --coverage-text
 
 test-coveralls: test-dependencies
 	@mkdir -p build/logs
@@ -46,6 +47,8 @@ doc: vendor
 	--destination build/docs/ \
 	--title "$(PACKAGE_NAME) v$(PACKAGE_VERSION)" \
 	--template-theme "bootstrap"
+
+# utils
 
 clean:
 	@rm -fR build
