@@ -1,7 +1,7 @@
 # customization
 
 PACKAGE_NAME = icanboogie/bind-symfony-dependency-injection
-PACKAGE_VERSION = 4.0
+PACKAGE_VERSION = 5.0
 PHPUNIT = vendor/bin/phpunit
 
 # do not edit the following lines
@@ -56,4 +56,3 @@ clean:
 	@rm -fR build
 	@rm -fR vendor
 	@rm -f composer.lock
-
