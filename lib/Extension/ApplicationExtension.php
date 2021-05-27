@@ -33,7 +33,7 @@ final class ApplicationExtension extends Extension
 	 */
 	static public function from(Application $app): self
 	{
-		return new static($app);
+		return new self($app);
 	}
 
 	/**

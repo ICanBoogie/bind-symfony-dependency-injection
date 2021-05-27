@@ -1,7 +1,6 @@
 # bind-symfony-dependency-injection
 
 [![Release](https://img.shields.io/packagist/v/ICanBoogie/bind-symfony-dependency-injection.svg)](https://packagist.org/packages/ICanBoogie/bind-symfony-dependency-injection)
-[![Build Status](https://img.shields.io/travis/ICanBoogie/bind-symfony-dependency-injection.svg)](http://travis-ci.org/ICanBoogie/bind-symfony-dependency-injection)
 [![Code Quality](https://img.shields.io/scrutinizer/g/ICanBoogie/bind-symfony-dependency-injection.svg)](https://scrutinizer-ci.com/g/ICanBoogie/bind-symfony-dependency-injection)
 [![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/bind-symfony-dependency-injection.svg)](https://coveralls.io/r/ICanBoogie/bind-symfony-dependency-injection)
 [![Packagist](https://img.shields.io/packagist/dt/ICanBoogie/bind-symfony-dependency-injection.svg)](https://packagist.org/packages/ICanBoogie/bind-symfony-dependency-injection)
@@ -197,10 +196,7 @@ installs dependencies as required. The `make test-coverage` command runs test su
 an HTML coverage report in `build/coverage`. The directory can later be cleaned with the `make
 clean` command.
 
-The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
-
-[![Build Status](https://img.shields.io/travis/ICanBoogie/bind-symfony-dependency-injection.svg)](http://travis-ci.org/ICanBoogie/bind-symfony-dependency-injection)
-[![Code Coverage](https://img.shields.io/coveralls/ICanBoogie/bind-symfony-dependency-injection.svg)](https://coveralls.io/r/ICanBoogie/bind-symfony-dependency-injection)
+The package is continuously tested by [GitHub actions](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions).
 
 
 
@@ -227,4 +223,4 @@ The package is continuously tested by [Travis CI](http://about.travis-ci.org/).
 
 [icanboogie/service]:           https://github.com/ICanBoogie/Service/
 [available on GitHub]:          https://github.com/ICanBoogie/bind-symfony-dependency-injection
-[symfony/dependency-injection]: https://symfony.com/doc/current/components/dependency_injection.html 
+[symfony/dependency-injection]: https://symfony.com/doc/current/components/dependency_injection.html

@@ -21,6 +21,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+
 use function array_keys;
 use function file_exists;
 use function file_put_contents;
@@ -54,9 +55,9 @@ final class ContainerProxy
 	 */
 	private $container;
 
-	protected function get_container()
+	protected function get_container(): ContainerInterface
 	{
-		return $this->container ?: $this->container = $this->instantiate_container();
+		return $this->container ?? $this->container = $this->instantiate_container();
 	}
 
 	// @codeCoverageIgnoreStart
