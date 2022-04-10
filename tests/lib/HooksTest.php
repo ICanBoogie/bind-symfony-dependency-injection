@@ -41,7 +41,7 @@ class HooksTest extends TestCase
 		}
 
 		$app->clear_cache();
-		$this->assertFileNotExists($pathname);
+		$this->assertFileDoesNotExist($pathname);
 
 		// should be fine too
 		$app->clear_cache();

@@ -1,4 +1,4 @@
-FROM php:7.2-cli-buster
+FROM php:8.0-cli-buster
 
 RUN apt-get update && \
 	apt-get install -y autoconf pkg-config && \
@@ -9,6 +9,12 @@ RUN apt-get update && \
 RUN echo '\
 apc.enable_cli=On\n\
 ' >> /usr/local/etc/php/conf.d/docker-php-ext-apcu.ini
+
+RUN echo '\
+display_errors=On\n\
+error_reporting=E_ALL\n\
+date.timezone=UTC\n\
+' >> /usr/local/etc/php/conf.d/php.ini
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
 
