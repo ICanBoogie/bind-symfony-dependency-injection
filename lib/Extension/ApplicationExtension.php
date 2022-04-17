@@ -16,6 +16,7 @@ use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Reference;
+
 use function strlen;
 use function strpos;
 use function strtr;
@@ -67,27 +68,20 @@ final class ApplicationExtension extends Extension
 
 	private function add_parameters(ContainerBuilder $container): void
 	{
-		foreach ($this->app->config as $param => $value)
-		{
+		foreach ($this->app->config as $param => $value) {
 			$param = $this->normalize_param($param);
-			$container->setParameter($param, $value);
+			$container->setParameter("app.$param", $value);
 		}
 	}
 
 	private function add_services(ContainerBuilder $container): void
 	{
-		foreach ($this->app->prototype as $method => $callable)
-		{
-			if (strpos($method, self::LAZY_GETTER_PREFIX) === 0)
-			{
+		foreach ($this->app->prototype as $method => $callable) {
+			if (strpos($method, self::LAZY_GETTER_PREFIX) === 0) {
 				$id = substr($method, strlen(self::LAZY_GETTER_PREFIX));
-			}
-			elseif (strpos($method, self::GETTER_PREFIX) === 0)
-			{
+			} elseif (strpos($method, self::GETTER_PREFIX) === 0) {
 				$id = substr($method, strlen(self::GETTER_PREFIX));
-			}
-			else
-			{
+			} else {
 				continue;
 			}
 

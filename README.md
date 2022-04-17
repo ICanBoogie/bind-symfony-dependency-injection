@@ -63,7 +63,9 @@ through the container `$app->container->get('session')`.
 ### Obtaining config parameters
 
 All application config parameters are available as container parameters e.g.
-`$app->container->getParameter('repository.cache`)`.
+`$app->container->getParameter('app.repository.cache`)`.
+
+**Note:** To avoid clashes, all application parameters are prefixed with `app.`.
 
 
 
@@ -146,14 +148,6 @@ is an optional identifier and _value_ a callable that constructs the extension.
 
 
 
-## Requirements
-
-The package requires PHP 7.2 or later.
-
-
-
-
-
 ## Installation
 
 The recommended way to install this package is through [Composer](http://getcomposer.org/):
@@ -161,28 +155,6 @@ The recommended way to install this package is through [Composer](http://getcomp
 ```
 $ composer require icanboogie/bind-symfony-dependency-injection
 ```
-
-
-
-
-
-### Cloning the repository
-
-The package is [available on GitHub][], its repository can be cloned with the following command
-line:
-
-	$ git clone https://github.com/ICanBoogie/bind-symfony-dependency-injection.git
-
-
-
-
-
-## Documentation
-
-The package is documented as part of the [ICanBoogie][] framework [documentation][]. You can
-generate the documentation for the package and its dependencies with the `make doc` command. The
-documentation is generated in the `build/docs` directory. [ApiGen](http://apigen.org/) is required.
-The directory can later be cleaned with the `make clean` command.
 
 
 
