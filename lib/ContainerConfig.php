@@ -35,7 +35,7 @@ final class ContainerConfig
 	 */
 	public const EXTENSIONS = 'extensions';
 
-	static public function synthesize(array $fragments): array
+	public static function synthesize(array $fragments): array
 	{
 		$use_caching = false;
 		$extensions = [];
@@ -66,7 +66,7 @@ final class ContainerConfig
 		];
 	}
 
-	static public function normalize(array $config): array
+	public static function normalize(array $config): array
 	{
 		return $config + [
 

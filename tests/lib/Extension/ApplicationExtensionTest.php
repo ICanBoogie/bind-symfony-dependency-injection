@@ -77,7 +77,7 @@ EOT
 		$this->assertTrue($this->container->hasParameter($param));
 	}
 
-	public function provideParameter()
+	public function provideParameter(): array
 	{
 		return $this->buildTestCases(<<<EOT
 app.app_path

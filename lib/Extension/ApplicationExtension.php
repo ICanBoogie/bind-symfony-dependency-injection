@@ -18,7 +18,6 @@ use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Reference;
 
 use function strlen;
-use function strpos;
 use function strtr;
 use function substr;
 use function uniqid;
@@ -32,19 +31,14 @@ final class ApplicationExtension extends Extension
 	/**
 	 * Create a new instance.
 	 */
-	static public function from(Application $app): self
+	public static function from(Application $app): self
 	{
 		return new self($app);
 	}
 
-	/**
-	 * @var Application
-	 */
-	private $app;
-
-	public function __construct(Application $app)
-	{
-		$this->app = $app;
+	public function __construct(
+		private readonly Application $app
+	) {
 	}
 
 	/**
@@ -53,14 +47,14 @@ final class ApplicationExtension extends Extension
 	public function load(array $configs, ContainerBuilder $container)
 	{
 		$container->setDefinition(
-			self::APP_SERVICE,
+			Application::class,
 			(new Definition(Application::class))
 				->setSynthetic(true)
-				->setPublic(true)
 		);
 
 		$container
-			->setAlias(Application::class, self::APP_SERVICE);
+			->setAlias(self::APP_SERVICE, Application::class)
+			->setPublic(true);
 
 		$this->add_parameters($container);
 		$this->add_services($container);
@@ -77,9 +71,9 @@ final class ApplicationExtension extends Extension
 	private function add_services(ContainerBuilder $container): void
 	{
 		foreach ($this->app->prototype as $method => $callable) {
-			if (strpos($method, self::LAZY_GETTER_PREFIX) === 0) {
+			if (str_starts_with($method, self::LAZY_GETTER_PREFIX)) {
 				$id = substr($method, strlen(self::LAZY_GETTER_PREFIX));
-			} elseif (strpos($method, self::GETTER_PREFIX) === 0) {
+			} elseif (str_starts_with($method, self::GETTER_PREFIX)) {
 				$id = substr($method, strlen(self::GETTER_PREFIX));
 			} else {
 				continue;

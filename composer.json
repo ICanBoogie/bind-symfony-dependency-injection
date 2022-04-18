@@ -1,6 +1,7 @@
 {
 	"name": "icanboogie/bind-symfony-dependency-injection",
 	"type": "library",
+	"version": "6.0",
 	"description": "Binds symfony/dependency-injection to ICanBoogie",
 	"keywords": [
 		"dependency",
@@ -22,12 +23,15 @@
 	},
 	"minimum-stability": "dev",
 	"prefer-stable": true,
+	"config": {
+		"sort-packages": true
+	},
 	"require": {
 		"php": ">=8.0",
 		"icanboogie/icanboogie": "^6.0",
 		"icanboogie/service": "^4.0",
-		"symfony/dependency-injection": "^6.0",
 		"symfony/config": "^6.0",
+		"symfony/dependency-injection": "^6.0",
 		"symfony/yaml": "^6.0"
 	},
 	"require-dev": {

@@ -13,6 +13,7 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Storage\Storage;
 use PHPUnit\Framework\TestCase;
+
 use function ICanBoogie\app;
 
 final class ServiceIntegrationTest extends TestCase
@@ -20,7 +21,7 @@ final class ServiceIntegrationTest extends TestCase
 	/**
 	 * @dataProvider provideService
 	 */
-	public function testService(string $service_id, string $service_class)
+	public function testService(string $service_id, string $service_class): void
 	{
 		$service = app()->$service_id;
 
@@ -28,7 +29,7 @@ final class ServiceIntegrationTest extends TestCase
 		$this->assertSame($service, app()->container->get("public.app.$service_id"));
 	}
 
-	public function provideService()
+	public function provideService(): array
 	{
 		return [
 

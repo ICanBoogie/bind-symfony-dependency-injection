@@ -32,7 +32,7 @@ use function getcwd;
  *
  * @property-read ContainerInterface $container
  */
-final class ContainerProxy
+final class ContainerProxy implements ContainerInterface
 {
 	use AccessorTrait;
 
@@ -41,40 +41,54 @@ final class ContainerProxy
 	private const CONFIG_FILENAME = 'services.yml';
 
 	/**
-	 * @var Application
+	 * @var array<string, mixed>
 	 */
-	private $app;
+	private array $config;
 
-	/**
-	 * @var array
-	 */
-	private $config = [];
+	private ContainerInterface $container;
 
-	/**
-	 * @var ContainerInterface
-	 */
-	private $container;
-
-	protected function get_container(): ContainerInterface
+	private function get_container(): ContainerInterface
 	{
-		return $this->container ?? $this->container = $this->instantiate_container();
+		return $this->container ??= $this->instantiate_container();
 	}
 
 	// @codeCoverageIgnoreStart
-	public function __construct(Application $app, array $config)
-	{
-		$this->app = $app;
+
+	/**
+	 * @param array<string, mixed> $config
+	 */
+	public function __construct(
+		private readonly Application $app,
+		array $config
+	) {
 		$this->config = ContainerConfig::normalize($config);
 	}
+
 	// @codeCoverageIgnoreEnd
 
+	/**
+	 * Note: We need the proxy to be a callable to satisfy `ICanBoogie\Service\ServiceProvider`.
+	 */
 	public function __invoke(string $id): object
 	{
-		switch ($id) {
-			case self::ALIAS_APP: return $this->app;
-			case self::ALIAS_CONTAINER: return $this->get_container();
-			default: return $this->get_container()->get($id);
-		}
+		return $this->get($id);
+	}
+
+	public function get(string $id)
+	{
+		return match ($id) {
+			self::ALIAS_APP, Application::class => $this->app,
+			self::ALIAS_CONTAINER => $this->get_container(),
+			default => $this->get_container()->get($id),
+		};
+	}
+
+	public function has(string $id): bool
+	{
+		return match ($id) {
+			self::ALIAS_APP, Application::class, self::ALIAS_CONTAINER => true,
+			default => $this->get_container()->has($id),
+		};
 	}
 
 	private function instantiate_container(): ContainerInterface
@@ -83,8 +97,7 @@ final class ContainerProxy
 		$class = 'ApplicationContainer';
 		$pathname = ContainerPathname::from($app);
 
-		if (!$this->config[ContainerConfig::USE_CACHING] || !file_exists($pathname))
-		{
+		if (!$this->config[ContainerConfig::USE_CACHING] || !file_exists($pathname)) {
 			$container = $this->create_container_builder();
 			$container->compile();
 			$this->dump_container($container, $pathname, $class);
@@ -112,8 +125,7 @@ final class ContainerProxy
 
 	private function apply_extensions(ContainerBuilder $container): void
 	{
-		foreach ($this->collect_extensions() as $extension)
-		{
+		foreach ($this->collect_extensions() as $extension) {
 			$container->registerExtension($extension);
 			$container->loadFromExtension($extension->getAlias());
 		}
@@ -127,8 +139,7 @@ final class ContainerProxy
 		$app = $this->app;
 		$extensions = [];
 
-		foreach ($this->config[ContainerConfig::EXTENSIONS] as $constructor)
-		{
+		foreach ($this->config[ContainerConfig::EXTENSIONS] as $constructor) {
 			$extensions[] = $constructor($app, $this);
 		}
 
@@ -139,15 +150,13 @@ final class ContainerProxy
 	{
 		$collection = $this->collect_services();
 
-		if (!$collection)
-		{
+		if (!$collection) {
 			return; // @codeCoverageIgnore
 		}
 
 		$loader = new YamlFileLoader($container, new FileLocator(getcwd()));
 
-		foreach ($collection as $service_pathname)
-		{
+		foreach ($collection as $service_pathname) {
 			$loader->load($service_pathname);
 		}
 	}
@@ -156,12 +165,10 @@ final class ContainerProxy
 	{
 		$collection = [];
 
-		foreach (array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path)
-		{
+		foreach (array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path) {
 			$pathname = $path . DIRECTORY_SEPARATOR . self::CONFIG_FILENAME;
 
-			if (!file_exists($pathname))
-			{
+			if (!file_exists($pathname)) {
 				continue;
 			}
 

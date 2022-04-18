@@ -39,8 +39,8 @@ test-coveralls: test-dependencies
 
 .PHONY: test-container
 test-container:
-	@-docker-compose -f ./docker-compose.yml -p icanboogie-bind-dic-test run --rm app bash
-	@docker-compose -f ./docker-compose.yml -p icanboogie-bind-dic-test down -v
+	@-docker-compose run --rm app bash
+	@docker-compose down -v
 
 .PHONY: doc
 doc: vendor
