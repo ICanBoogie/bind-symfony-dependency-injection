@@ -18,7 +18,7 @@ use PHPUnit\Framework\TestCase;
  */
 final class ContainerConfigTest extends TestCase
 {
-    public function test_should_synthesize_container_config()
+    public function test_should_synthesize_container_config(): void
     {
         $config = ContainerConfig::synthesize([
 
@@ -62,7 +62,7 @@ final class ContainerConfigTest extends TestCase
         ], $config);
     }
 
-    public function test_should_normalize_config()
+    public function test_should_normalize_config(): void
     {
         $this->assertSame([
 

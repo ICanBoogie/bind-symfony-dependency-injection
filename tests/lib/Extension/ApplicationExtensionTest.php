@@ -24,39 +24,35 @@ use function ICanBoogie\app;
  */
 final class ApplicationExtensionTest extends TestCase
 {
-    /**
-     * @var Container
-     */
-    private $container;
+    private Container $container;
 
     protected function setUp(): void
     {
-        $container = &$this->container;
-
-        if (!$container) {
+        $this->container ??= (function (): Container {
             $container = new ContainerBuilder();
             $extension = new ApplicationExtension(app());
             $extension->load([], $container);
-        }
+
+            return $container;
+        })();
     }
 
     /**
-     * @dataProvider provideService
-     *
-     * @param string $id
+     * @dataProvider provide_service
      */
-    public function testService($id)
+    public function test_service(string $id): void
     {
         $container = $this->container;
         $this->assertTrue($container->has($id));
     }
 
-    public function provideService()
+    // @phpstan-ignore-next-line
+    public function provide_service(): array
     {
-        return $this->buildTestCases(<<<EOT
+        return $this->build_test_cases(
+            <<<EOT
 app
 container
-dispatcher
 events
 initial_request
 logger
@@ -69,17 +65,17 @@ EOT
 
     /**
      * @dataProvider provideParameter
-     *
-     * @param string $param
      */
-    public function testParameter($param)
+    public function testParameter(string $param): void
     {
         $this->assertTrue($this->container->hasParameter($param));
     }
 
+    // @phpstan-ignore-next-line
     public function provideParameter(): array
     {
-        return $this->buildTestCases(<<<EOT
+        return $this->build_test_cases(
+            <<<EOT
 app.app_path
 app.app_paths
 app.base_path
@@ -104,10 +100,10 @@ EOT
         );
     }
 
-    private function buildTestCases($string)
+    // @phpstan-ignore-next-line
+    private function build_test_cases(string $string): array
     {
         return array_map(function ($param) {
-
             return [ $param ];
         }, explode("\n", $string));
     }

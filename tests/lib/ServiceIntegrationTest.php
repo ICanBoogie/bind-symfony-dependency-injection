@@ -20,6 +20,8 @@ final class ServiceIntegrationTest extends TestCase
 {
     /**
      * @dataProvider provideService
+     *
+     * @param class-string $service_class
      */
     public function testService(string $service_id, string $service_class): void
     {
@@ -29,6 +31,7 @@ final class ServiceIntegrationTest extends TestCase
         $this->assertSame($service, app()->container->get("public.app.$service_id"));
     }
 
+    // @phpstan-ignore-next-line
     public function provideService(): array
     {
         return [
