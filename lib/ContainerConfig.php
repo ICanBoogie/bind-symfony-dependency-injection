@@ -11,6 +11,8 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
+use function array_merge;
+
 final class ContainerConfig
 {
 	/**
@@ -35,6 +37,11 @@ final class ContainerConfig
 	 */
 	public const EXTENSIONS = 'extensions';
 
+	/**
+	 * @param array<int, array<string, mixed>> $fragments
+	 *
+	 * @return array<string, mixed>
+	 */
 	public static function synthesize(array $fragments): array
 	{
 		$use_caching = false;
@@ -55,7 +62,7 @@ final class ContainerConfig
 
 		if ($extensions)
 		{
-			$extensions = \array_merge(...$extensions);
+			$extensions = array_merge(...$extensions);
 		}
 
 		return [
@@ -66,6 +73,11 @@ final class ContainerConfig
 		];
 	}
 
+	/**
+	 * @param array<string, mixed> $config
+	 *
+	 * @return array<string, mixed>
+	 */
 	public static function normalize(array $config): array
 	{
 		return $config + [

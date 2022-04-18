@@ -41,10 +41,8 @@ final class ApplicationExtension extends Extension
 	) {
 	}
 
-	/**
-	 * @inheritdoc
-	 */
-	public function load(array $configs, ContainerBuilder $container)
+	// @phpstan-ignore-next-line
+	public function load(array $configs, ContainerBuilder $container): void
 	{
 		$container->setDefinition(
 			Application::class,

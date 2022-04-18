@@ -26,6 +26,7 @@ use function array_keys;
 use function file_exists;
 use function file_put_contents;
 use function getcwd;
+use function is_string;
 
 /**
  * Proxy to Symfony container.
@@ -98,19 +99,19 @@ final class ContainerProxy implements ContainerInterface
 		$pathname = ContainerPathname::from($app);
 
 		if (!$this->config[ContainerConfig::USE_CACHING] || !file_exists($pathname)) {
-			$container = $this->create_container_builder();
-			$container->compile();
-			$this->dump_container($container, $pathname, $class);
+			$builder = $this->create_container_builder();
+			$builder->compile();
+			$this->dump_container($builder, $pathname, $class);
 		}
 
 		require $pathname;
 
 		/* @var $container \Symfony\Component\DependencyInjection\ContainerInterface */
 
-		$container = new $class();
-		$container->set(self::ALIAS_APP, $app);
+		$container = new $class(); // @phpstan-ignore-line
+		$container->set(self::ALIAS_APP, $app); // @phpstan-ignore-line
 
-		return $container;
+		return $container; // @phpstan-ignore-line
 	}
 
 	private function create_container_builder(): ContainerBuilder
@@ -154,13 +155,18 @@ final class ContainerProxy implements ContainerInterface
 			return; // @codeCoverageIgnore
 		}
 
-		$loader = new YamlFileLoader($container, new FileLocator(getcwd()));
+		$cwd = getcwd();
+		assert(is_string($cwd));
+		$loader = new YamlFileLoader($container, new FileLocator($cwd));
 
 		foreach ($collection as $service_pathname) {
 			$loader->load($service_pathname);
 		}
 	}
 
+	/**
+	 * @return string[] Path names of the `services.yml` files collections.
+	 */
 	private function collect_services(): array
 	{
 		$collection = [];

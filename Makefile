@@ -42,14 +42,9 @@ test-container:
 	@-docker-compose run --rm app bash
 	@docker-compose down -v
 
-.PHONY: doc
-doc: vendor
-	@mkdir -p build/docs
-	@apigen generate \
-	--source lib \
-	--destination build/docs/ \
-	--title "$(PACKAGE_NAME) v$(PACKAGE_VERSION)" \
-	--template-theme "bootstrap"
+.PHONY: lint
+lint:
+	@XDEBUG_MODE=off vendor/bin/phpstan
 
 .PHONY: clean
 clean:
