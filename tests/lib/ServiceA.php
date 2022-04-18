@@ -13,5 +13,4 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 class ServiceA
 {
-
 }

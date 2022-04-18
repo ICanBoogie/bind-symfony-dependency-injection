@@ -19,20 +19,20 @@ use ICanBoogie\Application;
  */
 final class ContainerPathname
 {
-	private const FILENAME = 'container-compiled.php';
+    private const FILENAME = 'container-compiled.php';
 
-	public static function from(Application $app): self
-	{
-		return new self($app->config[AppConfig::REPOSITORY_CACHE] . DIRECTORY_SEPARATOR . self::FILENAME);
-	}
+    public static function from(Application $app): self
+    {
+        return new self($app->config[AppConfig::REPOSITORY_CACHE] . DIRECTORY_SEPARATOR . self::FILENAME);
+    }
 
-	private function __construct(
-		private readonly string $pathname
-	) {
-	}
+    private function __construct(
+        private readonly string $pathname
+    ) {
+    }
 
-	public function __toString(): string
-	{
-		return $this->pathname;
-	}
+    public function __toString(): string
+    {
+        return $this->pathname;
+    }
 }

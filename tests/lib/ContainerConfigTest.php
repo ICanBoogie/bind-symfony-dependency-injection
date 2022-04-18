@@ -18,57 +18,57 @@ use PHPUnit\Framework\TestCase;
  */
 final class ContainerConfigTest extends TestCase
 {
-	public function test_should_synthesize_container_config()
-	{
-		$config = ContainerConfig::synthesize([
+    public function test_should_synthesize_container_config()
+    {
+        $config = ContainerConfig::synthesize([
 
-			[
+            [
 
-				ContainerConfig::USE_CACHING => false,
-				ContainerConfig::EXTENSIONS => [
+                ContainerConfig::USE_CACHING => false,
+                ContainerConfig::EXTENSIONS => [
 
-					'one' => $f1 = uniqid(),
-					'two' => $f2 = uniqid(),
+                    'one' => $f1 = uniqid(),
+                    'two' => $f2 = uniqid(),
 
-				]
+                ]
 
-			],
+            ],
 
-			[
+            [
 
-				ContainerConfig::USE_CACHING => true,
-				ContainerConfig::EXTENSIONS => [
+                ContainerConfig::USE_CACHING => true,
+                ContainerConfig::EXTENSIONS => [
 
-					'one' => $f3 = uniqid(),
-					'three' => $f4 = uniqid(),
+                    'one' => $f3 = uniqid(),
+                    'three' => $f4 = uniqid(),
 
-				]
+                ]
 
-			]
+            ]
 
-		]);
+        ]);
 
-		$this->assertSame([
+        $this->assertSame([
 
-			ContainerConfig::USE_CACHING => true,
-			ContainerConfig::EXTENSIONS => [
+            ContainerConfig::USE_CACHING => true,
+            ContainerConfig::EXTENSIONS => [
 
-				'one' => $f3,
-				'two' => $f2,
-				'three' => $f4
+                'one' => $f3,
+                'two' => $f2,
+                'three' => $f4
 
-			]
+            ]
 
-		], $config);
-	}
+        ], $config);
+    }
 
-	public function test_should_normalize_config()
-	{
-		$this->assertSame([
+    public function test_should_normalize_config()
+    {
+        $this->assertSame([
 
-			ContainerConfig::USE_CACHING => false,
-			ContainerConfig::EXTENSIONS => []
+            ContainerConfig::USE_CACHING => false,
+            ContainerConfig::EXTENSIONS => []
 
-		], ContainerConfig::normalize([]));
-	}
+        ], ContainerConfig::normalize([]));
+    }
 }

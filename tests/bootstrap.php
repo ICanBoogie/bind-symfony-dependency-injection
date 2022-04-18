@@ -15,9 +15,8 @@ chdir(__DIR__);
 
 require __DIR__ . '/../vendor/autoload.php';
 
-if (file_exists(__DIR__ . '/repository/cache/container-compiled.php'))
-{
-	unlink(__DIR__ . '/repository/cache/container-compiled.php');
+if (file_exists(__DIR__ . '/repository/cache/container-compiled.php')) {
+    unlink(__DIR__ . '/repository/cache/container-compiled.php');
 }
 
 boot();

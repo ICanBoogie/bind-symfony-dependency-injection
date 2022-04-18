@@ -18,23 +18,23 @@ use function ICanBoogie\app;
 
 final class ServiceIntegrationTest extends TestCase
 {
-	/**
-	 * @dataProvider provideService
-	 */
-	public function testService(string $service_id, string $service_class): void
-	{
-		$service = app()->$service_id;
+    /**
+     * @dataProvider provideService
+     */
+    public function testService(string $service_id, string $service_class): void
+    {
+        $service = app()->$service_id;
 
-		$this->assertInstanceOf($service_class, $service);
-		$this->assertSame($service, app()->container->get("public.app.$service_id"));
-	}
+        $this->assertInstanceOf($service_class, $service);
+        $this->assertSame($service, app()->container->get("public.app.$service_id"));
+    }
 
-	public function provideService(): array
-	{
-		return [
+    public function provideService(): array
+    {
+        return [
 
-			[ 'vars', Storage::class ],
+            [ 'vars', Storage::class ],
 
-		];
-	}
+        ];
+    }
 }

@@ -15,8 +15,8 @@ use function ICanBoogie\app;
 
 final class ServiceAccessor
 {
-	public static function get(string $id): object
-	{
-		return app()->$id;
-	}
+    public static function get(string $id): object
+    {
+        return app()->$id;
+    }
 }

@@ -18,5 +18,4 @@ use Psr\Container\ContainerInterface;
  */
 trait ApplicationBindings
 {
-
 }

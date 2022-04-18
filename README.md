@@ -152,6 +152,7 @@ The project is continuously tested by [GitHub actions](https://github.com/ICanBo
 
 [![Tests](https://github.com/ICanBoogie/bind-symfony-dependency-injection/workflows/test/badge.svg?branch=master)](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions?query=workflow%3Atest)
 [![Static Analysis](https://github.com/ICanBoogie/bind-symfony-dependency-injection/workflows/static-analysis/badge.svg?branch=master)](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions?query=workflow%3Astatic-analysis)
+[![Code Style](https://github.com/ICanBoogie/bind-symfony-dependency-injection/workflows/code-style/badge.svg?branch=master)](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions?query=workflow%3Acode-style)
 
 
 

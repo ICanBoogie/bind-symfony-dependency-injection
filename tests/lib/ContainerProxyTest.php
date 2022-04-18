@@ -21,30 +21,30 @@ use Symfony\Component\DependencyInjection\Container;
  */
 final class ContainerProxyTest extends TestCase
 {
-	private ContainerProxy $proxy;
+    private ContainerProxy $proxy;
 
-	protected function setUp(): void
-	{
-		$this->proxy ??= ServiceProvider::defined();
-	}
+    protected function setUp(): void
+    {
+        $this->proxy ??= ServiceProvider::defined();
+    }
 
-	public function testGetContainer(): void
-	{
-		$this->assertInstanceOf(Container::class, $this->proxy->container);
-	}
+    public function testGetContainer(): void
+    {
+        $this->assertInstanceOf(Container::class, $this->proxy->container);
+    }
 
-	public function testInvoke(): void
-	{
-		$proxy = $this->proxy;
-		$this->assertInstanceOf(Application::class, $proxy->get('app'));
-		$this->assertInstanceOf(Application::class, $proxy->get(Application::class));
-	}
+    public function testInvoke(): void
+    {
+        $proxy = $this->proxy;
+        $this->assertInstanceOf(Application::class, $proxy->get('app'));
+        $this->assertInstanceOf(Application::class, $proxy->get(Application::class));
+    }
 
-	public function testServices(): void
-	{
-		$proxy = $this->proxy;
-		$this->assertInstanceOf(ServiceA::class, $proxy->get('service_a'));
-		$this->assertInstanceOf(ServiceB::class, $proxy->get('service_b'));
-		$this->assertInstanceOf(ServiceC::class, $proxy->get('service_c'));
-	}
+    public function testServices(): void
+    {
+        $proxy = $this->proxy;
+        $this->assertInstanceOf(ServiceA::class, $proxy->get('service_a'));
+        $this->assertInstanceOf(ServiceB::class, $proxy->get('service_b'));
+        $this->assertInstanceOf(ServiceC::class, $proxy->get('service_c'));
+    }
 }

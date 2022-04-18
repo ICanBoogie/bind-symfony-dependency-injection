@@ -13,5 +13,5 @@ namespace ICanBoogie;
 
 class Application extends ApplicationAbstract
 {
-	use Binding\SymfonyDependencyInjection\ApplicationBindings;
+    use Binding\SymfonyDependencyInjection\ApplicationBindings;
 }

@@ -44,10 +44,5 @@ test-container:
 
 .PHONY: lint
 lint:
+	@XDEBUG_MODE=off phpcs -s
 	@XDEBUG_MODE=off vendor/bin/phpstan
-
-.PHONY: clean
-clean:
-	@rm -fR build
-	@rm -fR vendor
-	@rm -f composer.lock

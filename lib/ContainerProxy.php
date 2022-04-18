@@ -35,159 +35,159 @@ use function is_string;
  */
 final class ContainerProxy implements ContainerInterface
 {
-	use AccessorTrait;
+    use AccessorTrait;
 
-	public const ALIAS_APP = ApplicationExtension::APP_SERVICE;
-	public const ALIAS_CONTAINER = 'container';
-	private const CONFIG_FILENAME = 'services.yml';
+    public const ALIAS_APP = ApplicationExtension::APP_SERVICE;
+    public const ALIAS_CONTAINER = 'container';
+    private const CONFIG_FILENAME = 'services.yml';
 
-	/**
-	 * @var array<string, mixed>
-	 */
-	private array $config;
+    /**
+     * @var array<string, mixed>
+     */
+    private array $config;
 
-	private ContainerInterface $container;
+    private ContainerInterface $container;
 
-	private function get_container(): ContainerInterface
-	{
-		return $this->container ??= $this->instantiate_container();
-	}
+    private function get_container(): ContainerInterface
+    {
+        return $this->container ??= $this->instantiate_container();
+    }
 
-	// @codeCoverageIgnoreStart
+    // @codeCoverageIgnoreStart
 
-	/**
-	 * @param array<string, mixed> $config
-	 */
-	public function __construct(
-		private readonly Application $app,
-		array $config
-	) {
-		$this->config = ContainerConfig::normalize($config);
-	}
+    /**
+     * @param array<string, mixed> $config
+     */
+    public function __construct(
+        private readonly Application $app,
+        array $config
+    ) {
+        $this->config = ContainerConfig::normalize($config);
+    }
 
-	// @codeCoverageIgnoreEnd
+    // @codeCoverageIgnoreEnd
 
-	/**
-	 * Note: We need the proxy to be a callable to satisfy `ICanBoogie\Service\ServiceProvider`.
-	 */
-	public function __invoke(string $id): object
-	{
-		return $this->get($id);
-	}
+    /**
+     * Note: We need the proxy to be a callable to satisfy `ICanBoogie\Service\ServiceProvider`.
+     */
+    public function __invoke(string $id): object
+    {
+        return $this->get($id);
+    }
 
-	public function get(string $id)
-	{
-		return match ($id) {
-			self::ALIAS_APP, Application::class => $this->app,
-			self::ALIAS_CONTAINER => $this->get_container(),
-			default => $this->get_container()->get($id),
-		};
-	}
+    public function get(string $id)
+    {
+        return match ($id) {
+            self::ALIAS_APP, Application::class => $this->app,
+            self::ALIAS_CONTAINER => $this->get_container(),
+            default => $this->get_container()->get($id),
+        };
+    }
 
-	public function has(string $id): bool
-	{
-		return match ($id) {
-			self::ALIAS_APP, Application::class, self::ALIAS_CONTAINER => true,
-			default => $this->get_container()->has($id),
-		};
-	}
+    public function has(string $id): bool
+    {
+        return match ($id) {
+            self::ALIAS_APP, Application::class, self::ALIAS_CONTAINER => true,
+            default => $this->get_container()->has($id),
+        };
+    }
 
-	private function instantiate_container(): ContainerInterface
-	{
-		$app = $this->app;
-		$class = 'ApplicationContainer';
-		$pathname = ContainerPathname::from($app);
+    private function instantiate_container(): ContainerInterface
+    {
+        $app = $this->app;
+        $class = 'ApplicationContainer';
+        $pathname = ContainerPathname::from($app);
 
-		if (!$this->config[ContainerConfig::USE_CACHING] || !file_exists($pathname)) {
-			$builder = $this->create_container_builder();
-			$builder->compile();
-			$this->dump_container($builder, $pathname, $class);
-		}
+        if (!$this->config[ContainerConfig::USE_CACHING] || !file_exists($pathname)) {
+            $builder = $this->create_container_builder();
+            $builder->compile();
+            $this->dump_container($builder, $pathname, $class);
+        }
 
-		require $pathname;
+        require $pathname;
 
-		/* @var $container \Symfony\Component\DependencyInjection\ContainerInterface */
+        /* @var $container \Symfony\Component\DependencyInjection\ContainerInterface */
 
-		$container = new $class(); // @phpstan-ignore-line
-		$container->set(self::ALIAS_APP, $app); // @phpstan-ignore-line
+        $container = new $class(); // @phpstan-ignore-line
+        $container->set(self::ALIAS_APP, $app); // @phpstan-ignore-line
 
-		return $container; // @phpstan-ignore-line
-	}
+        return $container; // @phpstan-ignore-line
+    }
 
-	private function create_container_builder(): ContainerBuilder
-	{
-		$container = new ContainerBuilder();
+    private function create_container_builder(): ContainerBuilder
+    {
+        $container = new ContainerBuilder();
 
-		$this->apply_extensions($container);
-		$this->apply_services($container);
+        $this->apply_extensions($container);
+        $this->apply_services($container);
 
-		return $container;
-	}
+        return $container;
+    }
 
-	private function apply_extensions(ContainerBuilder $container): void
-	{
-		foreach ($this->collect_extensions() as $extension) {
-			$container->registerExtension($extension);
-			$container->loadFromExtension($extension->getAlias());
-		}
-	}
+    private function apply_extensions(ContainerBuilder $container): void
+    {
+        foreach ($this->collect_extensions() as $extension) {
+            $container->registerExtension($extension);
+            $container->loadFromExtension($extension->getAlias());
+        }
+    }
 
-	/**
-	 * @return Extension[]
-	 */
-	private function collect_extensions(): array
-	{
-		$app = $this->app;
-		$extensions = [];
+    /**
+     * @return Extension[]
+     */
+    private function collect_extensions(): array
+    {
+        $app = $this->app;
+        $extensions = [];
 
-		foreach ($this->config[ContainerConfig::EXTENSIONS] as $constructor) {
-			$extensions[] = $constructor($app, $this);
-		}
+        foreach ($this->config[ContainerConfig::EXTENSIONS] as $constructor) {
+            $extensions[] = $constructor($app, $this);
+        }
 
-		return $extensions;
-	}
+        return $extensions;
+    }
 
-	private function apply_services(ContainerBuilder $container): void
-	{
-		$collection = $this->collect_services();
+    private function apply_services(ContainerBuilder $container): void
+    {
+        $collection = $this->collect_services();
 
-		if (!$collection) {
-			return; // @codeCoverageIgnore
-		}
+        if (!$collection) {
+            return; // @codeCoverageIgnore
+        }
 
-		$cwd = getcwd();
-		assert(is_string($cwd));
-		$loader = new YamlFileLoader($container, new FileLocator($cwd));
+        $cwd = getcwd();
+        assert(is_string($cwd));
+        $loader = new YamlFileLoader($container, new FileLocator($cwd));
 
-		foreach ($collection as $service_pathname) {
-			$loader->load($service_pathname);
-		}
-	}
+        foreach ($collection as $service_pathname) {
+            $loader->load($service_pathname);
+        }
+    }
 
-	/**
-	 * @return string[] Path names of the `services.yml` files collections.
-	 */
-	private function collect_services(): array
-	{
-		$collection = [];
+    /**
+     * @return string[] Path names of the `services.yml` files collections.
+     */
+    private function collect_services(): array
+    {
+        $collection = [];
 
-		foreach (array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path) {
-			$pathname = $path . DIRECTORY_SEPARATOR . self::CONFIG_FILENAME;
+        foreach (array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path) {
+            $pathname = $path . DIRECTORY_SEPARATOR . self::CONFIG_FILENAME;
 
-			if (!file_exists($pathname)) {
-				continue;
-			}
+            if (!file_exists($pathname)) {
+                continue;
+            }
 
-			$collection[] = $pathname;
-		}
+            $collection[] = $pathname;
+        }
 
-		return $collection;
-	}
+        return $collection;
+    }
 
-	private function dump_container(ContainerBuilder $container, ContainerPathname $pathname, string $class): void
-	{
-		$dumper = new PhpDumper($container);
+    private function dump_container(ContainerBuilder $container, ContainerPathname $pathname, string $class): void
+    {
+        $dumper = new PhpDumper($container);
 
-		file_put_contents($pathname, $dumper->dump([ 'class' => $class ]));
-	}
+        file_put_contents($pathname, $dumper->dump([ 'class' => $class ]));
+    }
 }

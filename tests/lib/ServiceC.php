@@ -13,7 +13,7 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 class ServiceC
 {
-	public function __construct(ServiceA $a, ServiceB $b)
-	{
-	}
+    public function __construct(ServiceA $a, ServiceB $b)
+    {
+    }
 }

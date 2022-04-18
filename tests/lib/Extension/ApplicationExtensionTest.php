@@ -14,6 +14,7 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection\Extension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+
 use function array_map;
 use function explode;
 use function ICanBoogie\app;
@@ -23,37 +24,36 @@ use function ICanBoogie\app;
  */
 final class ApplicationExtensionTest extends TestCase
 {
-	/**
-	 * @var Container
-	 */
-	private $container;
+    /**
+     * @var Container
+     */
+    private $container;
 
-	protected function setUp(): void
-	{
-		$container = &$this->container;
+    protected function setUp(): void
+    {
+        $container = &$this->container;
 
-		if (!$container)
-		{
-			$container = new ContainerBuilder;
-			$extension = new ApplicationExtension(app());
-			$extension->load([], $container);
-		}
-	}
+        if (!$container) {
+            $container = new ContainerBuilder();
+            $extension = new ApplicationExtension(app());
+            $extension->load([], $container);
+        }
+    }
 
-	/**
-	 * @dataProvider provideService
-	 *
-	 * @param string $id
-	 */
-	public function testService($id)
-	{
-		$container = $this->container;
-		$this->assertTrue($container->has($id));
-	}
+    /**
+     * @dataProvider provideService
+     *
+     * @param string $id
+     */
+    public function testService($id)
+    {
+        $container = $this->container;
+        $this->assertTrue($container->has($id));
+    }
 
-	public function provideService()
-	{
-		return $this->buildTestCases(<<<EOT
+    public function provideService()
+    {
+        return $this->buildTestCases(<<<EOT
 app
 container
 dispatcher
@@ -64,22 +64,22 @@ request
 routes
 session
 EOT
-		);
-	}
+        );
+    }
 
-	/**
-	 * @dataProvider provideParameter
-	 *
-	 * @param string $param
-	 */
-	public function testParameter($param)
-	{
-		$this->assertTrue($this->container->hasParameter($param));
-	}
+    /**
+     * @dataProvider provideParameter
+     *
+     * @param string $param
+     */
+    public function testParameter($param)
+    {
+        $this->assertTrue($this->container->hasParameter($param));
+    }
 
-	public function provideParameter(): array
-	{
-		return $this->buildTestCases(<<<EOT
+    public function provideParameter(): array
+    {
+        return $this->buildTestCases(<<<EOT
 app.app_path
 app.app_paths
 app.base_path
@@ -101,15 +101,14 @@ app.session
 app.storage_for_configs
 app.storage_for_vars
 EOT
-		);
-	}
+        );
+    }
 
-	private function buildTestCases($string)
-	{
-		return array_map(function ($param) {
+    private function buildTestCases($string)
+    {
+        return array_map(function ($param) {
 
-			return [ $param ];
-
-		}, explode("\n", $string));
-	}
+            return [ $param ];
+        }, explode("\n", $string));
+    }
 }

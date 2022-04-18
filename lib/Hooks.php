@@ -20,40 +20,40 @@ use function unlink;
 
 final class Hooks
 {
-	/*
-	 * Prototype methods
-	 */
+    /*
+     * Prototype methods
+     */
 
-	// @codeCoverageIgnoreStart
-	public static function on_app_boot(Application\BootEvent $event, Application $app): void
-	{
-		ServiceProvider::define(
-			new ContainerProxy(
-				$app,
-				$app->configs[ContainerConfig::FRAGMENT_FOR_CONTAINER]
-			)
-		);
-	}
+    // @codeCoverageIgnoreStart
+    public static function on_app_boot(Application\BootEvent $event, Application $app): void
+    {
+        ServiceProvider::define(
+            new ContainerProxy(
+                $app,
+                $app->configs[ContainerConfig::FRAGMENT_FOR_CONTAINER]
+            )
+        );
+    }
 
-	// @codeCoverageIgnoreEnd
+    // @codeCoverageIgnoreEnd
 
-	public static function on_app_clear_cache(Application\ClearCacheEvent $event, Application $app): void
-	{
-		$pathname = ContainerPathname::from($app);
+    public static function on_app_clear_cache(Application\ClearCacheEvent $event, Application $app): void
+    {
+        $pathname = ContainerPathname::from($app);
 
-		if (!file_exists($pathname)) {
-			return;
-		}
+        if (!file_exists($pathname)) {
+            return;
+        }
 
-		unlink($pathname);
-	}
+        unlink($pathname);
+    }
 
-	/*
-	 * Prototype accessors
-	 */
+    /*
+     * Prototype accessors
+     */
 
-	public static function app_get_container(Application $app): ContainerInterface
-	{
-		return ServiceProvider::provide(ContainerProxy::ALIAS_CONTAINER);
-	}
+    public static function app_get_container(Application $app): ContainerInterface
+    {
+        return ServiceProvider::provide(ContainerProxy::ALIAS_CONTAINER);
+    }
 }
