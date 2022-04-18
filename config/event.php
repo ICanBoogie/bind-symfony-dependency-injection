@@ -11,6 +11,12 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
+use ICanBoogie\Application;
+use ICanBoogie\Application\BootEvent;
+use ICanBoogie\Application\ClearCacheEvent;
+
+use function ICanBoogie\Event\qualify_type;
+
 /**
  * @uses Hooks::on_app_boot
  * @uses Hooks::on_app_clear_cache
@@ -20,7 +26,7 @@ $hooks = Hooks::class . '::';
 
 return [
 
-	'ICanBoogie\Application::boot'        => $hooks . 'on_app_boot',
-	'ICanBoogie\Application::clear_cache' => $hooks . 'on_app_clear_cache',
+    qualify_type(Application::class, BootEvent::TYPE) => $hooks . 'on_app_boot',
+    qualify_type(Application::class, ClearCacheEvent::TYPE) => $hooks . 'on_app_clear_cache',
 
 ];
