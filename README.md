@@ -156,6 +156,19 @@ The project is continuously tested by [GitHub actions](https://github.com/ICanBo
 
 
 
+## Code of Conduct
+
+This project adheres to a [Contributor Code of Conduct](CODE_OF_CONDUCT.md). By participating in this project and its
+community, you are expected to uphold this code.
+
+
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+
+
 ## Testing
 
 Run `make test-container` to create and log into the test container, then run `make test` to run the
