@@ -25,19 +25,23 @@ final class ContainerProxyTest extends TestCase
 
     protected function setUp(): void
     {
-        $this->proxy ??= ServiceProvider::defined();
+        $this->proxy ??= ServiceProvider::defined(); // @phpstan-ignore-line
     }
 
     public function testGetContainer(): void
     {
-        $this->assertInstanceOf(Container::class, $this->proxy->container);
+        $container = $this->proxy->container;
+        $this->assertInstanceOf(Container::class, $container);
+        // Make sure synthetic service is defined.
+        $this->assertInstanceOf(Application::class, $app = $container->get(Application::class));
+        $this->assertSame($app, $container->get('app'));
     }
 
     public function testInvoke(): void
     {
         $proxy = $this->proxy;
-        $this->assertInstanceOf(Application::class, $proxy->get('app'));
-        $this->assertInstanceOf(Application::class, $proxy->get(Application::class));
+        $this->assertInstanceOf(Application::class, $app = $proxy->get(Application::class));
+        $this->assertSame($app, $proxy->get('app'));
     }
 
     public function testServices(): void

@@ -109,7 +109,7 @@ final class ContainerProxy implements ContainerInterface
         /* @var $container \Symfony\Component\DependencyInjection\ContainerInterface */
 
         $container = new $class(); // @phpstan-ignore-line
-        $container->set(self::ALIAS_APP, $app); // @phpstan-ignore-line
+        $container->set(Application::class, $app); // @phpstan-ignore-line
 
         return $container; // @phpstan-ignore-line
     }
