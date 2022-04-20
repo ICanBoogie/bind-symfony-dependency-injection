@@ -17,7 +17,7 @@ use ICanBoogie\Application\ClearCacheEvent;
 
 return [
 
-    BootEvent::for(Application::class) => [ Hooks::class, 'on_app_boot'] ,
-    ClearCacheEvent::for(Application::class) => [ Hooks::class, 'on_app_clear_cache' ],
+    BootEvent::for(Application::class) => [ EventCallbacks::class, 'on_boot' ],
+    ClearCacheEvent::for(Application::class) => [ EventCallbacks::class, 'on_clear_cache' ],
 
 ];

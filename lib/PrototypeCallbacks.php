@@ -12,9 +12,13 @@
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
+use ICanBoogie\Service\ServiceProvider;
+use Psr\Container\ContainerInterface;
 
-return [
-
-    Application::class . '::get_container' => [ PrototypeCallbacks::class, 'app_get_container' ],
-
-];
+final class PrototypeCallbacks
+{
+    public static function app_get_container(Application $app): ContainerInterface
+    {
+        return ServiceProvider::provide(ContainerProxy::ALIAS_CONTAINER);
+    }
+}

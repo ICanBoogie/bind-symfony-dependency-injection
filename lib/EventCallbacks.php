@@ -13,19 +13,14 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
 use ICanBoogie\Service\ServiceProvider;
-use Psr\Container\ContainerInterface;
 
 use function file_exists;
 use function unlink;
 
-final class Hooks
+final class EventCallbacks
 {
-    /*
-     * Prototype methods
-     */
-
     // @codeCoverageIgnoreStart
-    public static function on_app_boot(Application\BootEvent $event, Application $app): void
+    public static function on_boot(Application\BootEvent $event, Application $app): void
     {
         ServiceProvider::define(
             new ContainerProxy(
@@ -37,7 +32,7 @@ final class Hooks
 
     // @codeCoverageIgnoreEnd
 
-    public static function on_app_clear_cache(Application\ClearCacheEvent $event, Application $app): void
+    public static function on_clear_cache(Application\ClearCacheEvent $event, Application $app): void
     {
         $pathname = ContainerPathname::from($app);
 
@@ -46,14 +41,5 @@ final class Hooks
         }
 
         unlink($pathname);
-    }
-
-    /*
-     * Prototype accessors
-     */
-
-    public static function app_get_container(Application $app): ContainerInterface
-    {
-        return ServiceProvider::provide(ContainerProxy::ALIAS_CONTAINER);
     }
 }
