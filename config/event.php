@@ -15,18 +15,9 @@ use ICanBoogie\Application;
 use ICanBoogie\Application\BootEvent;
 use ICanBoogie\Application\ClearCacheEvent;
 
-use function ICanBoogie\Event\qualify_type;
-
-/**
- * @uses Hooks::on_app_boot
- * @uses Hooks::on_app_clear_cache
- */
-
-$hooks = Hooks::class . '::';
-
 return [
 
-    qualify_type(Application::class, BootEvent::TYPE) => $hooks . 'on_app_boot',
-    qualify_type(Application::class, ClearCacheEvent::TYPE) => $hooks . 'on_app_clear_cache',
+    BootEvent::for(Application::class) => [ Hooks::class, 'on_app_boot'] ,
+    ClearCacheEvent::for(Application::class) => [ Hooks::class, 'on_app_clear_cache' ],
 
 ];
