@@ -40,4 +40,14 @@ final class ServiceIntegrationTest extends TestCase
 
         ];
     }
+
+    public function set_compiler_pass_parameter(): void
+    {
+        $container = app()->container->get('service_container');
+
+        $this->assertEquals(
+            "Hello world!",
+            $container->getParameter('compiler_pass_parameter')
+        );
+    }
 }

@@ -17,6 +17,7 @@ use ICanBoogie\Autoconfig\Autoconfig;
 use ICanBoogie\Binding\SymfonyDependencyInjection\Extension\ApplicationExtension;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
+use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -118,33 +119,50 @@ final class ContainerProxy implements ContainerInterface
     {
         $container = new ContainerBuilder();
 
-        $this->apply_extensions($container);
         $this->apply_services($container);
+        $this->apply_compiler_passes($container);
+        $this->apply_extensions($container);
 
         return $container;
     }
 
+    private function apply_compiler_passes(ContainerBuilder $builder): void
+    {
+        foreach ($this->compiler_passes() as $compiler_pass) {
+            $compiler_pass->process($builder);
+        }
+    }
+
     private function apply_extensions(ContainerBuilder $container): void
     {
-        foreach ($this->collect_extensions() as $extension) {
+        foreach ($this->extensions() as $extension) {
             $container->registerExtension($extension);
             $container->loadFromExtension($extension->getAlias());
         }
     }
 
     /**
-     * @return Extension[]
+     * @return iterable<CompilerPassInterface>
      */
-    private function collect_extensions(): array
+    private function compiler_passes(): iterable
+    {
+        /* @var class-string<CompilerPassInterface> $class */
+
+        foreach ($this->config[ContainerConfig::COMPILER_PASSES] as $class) {
+            yield new $class(); // @phpstan-ignore-line
+        }
+    }
+
+    /**
+     * @return iterable<Extension>
+     */
+    private function extensions(): iterable
     {
         $app = $this->app;
-        $extensions = [];
 
         foreach ($this->config[ContainerConfig::EXTENSIONS] as $constructor) {
-            $extensions[] = $constructor($app, $this);
+            yield $constructor($app, $this);
         }
-
-        return $extensions;
     }
 
     private function apply_services(ContainerBuilder $container): void

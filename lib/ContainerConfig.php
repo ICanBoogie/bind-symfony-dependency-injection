@@ -38,6 +38,12 @@ final class ContainerConfig
     public const EXTENSIONS = 'extensions';
 
     /**
+     * Compiler passes give you an opportunity to manipulate other service definitions that have been registered with
+     * the service container. You can read about how to create them in the components section "Compiling the Container".
+     */
+    public const COMPILER_PASSES = 'compiler_passes';
+
+    /**
      * @param array<int, array<string, mixed>> $fragments
      *
      * @return array<string, mixed>
@@ -46,25 +52,30 @@ final class ContainerConfig
     {
         $use_caching = false;
         $extensions = [];
+        $compiler_passes = [];
 
         foreach ($fragments as $fragment) {
             if (isset($fragment[self::USE_CACHING])) {
                 $use_caching = $fragment[self::USE_CACHING];
             }
 
-            if (isset($fragment[self::EXTENSIONS])) {
-                $extensions[] = $fragment[self::EXTENSIONS];
-            }
+            $extensions[] = $fragment[self::EXTENSIONS] ?? [];
+            $compiler_passes[] = $fragment[self::COMPILER_PASSES] ?? [];
         }
 
         if ($extensions) {
             $extensions = array_merge(...$extensions);
         }
 
+        if ($compiler_passes) {
+            $compiler_passes = array_merge(...$compiler_passes);
+        }
+
         return [
 
             self::USE_CACHING => $use_caching,
-            self::EXTENSIONS => $extensions
+            self::EXTENSIONS => $extensions,
+            self::COMPILER_PASSES => $compiler_passes,
 
         ];
     }
@@ -80,6 +91,7 @@ final class ContainerConfig
 
             self::USE_CACHING => false,
             self::EXTENSIONS => [],
+            self::COMPILER_PASSES => [],
 
         ];
     }

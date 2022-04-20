@@ -1,3 +1,6 @@
+parameters:
+  compiler_pass_parameter: ~
+
 services:
 
   service_c:
