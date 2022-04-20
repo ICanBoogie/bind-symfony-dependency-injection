@@ -25,7 +25,7 @@ final class EventCallbacks
         ServiceProvider::define(
             new ContainerProxy(
                 $app,
-                $app->configs[ContainerConfig::FRAGMENT_FOR_CONTAINER]
+                $app->configs[ConfigBuilder::FRAGMENT_NAME]
             )
         );
     }

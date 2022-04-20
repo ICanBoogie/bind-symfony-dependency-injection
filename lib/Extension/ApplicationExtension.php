@@ -12,6 +12,7 @@
 namespace ICanBoogie\Binding\SymfonyDependencyInjection\Extension;
 
 use ICanBoogie\Application;
+use ICanBoogie\Binding\SymfonyDependencyInjection\ExtensionWithFactory;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
@@ -22,7 +23,7 @@ use function strtr;
 use function substr;
 use function uniqid;
 
-final class ApplicationExtension extends Extension
+final class ApplicationExtension extends Extension implements ExtensionWithFactory
 {
     public const APP_SERVICE = 'app';
     private const GETTER_PREFIX = 'get_';
@@ -36,7 +37,7 @@ final class ApplicationExtension extends Extension
         return new self($app);
     }
 
-    public function __construct(
+    private function __construct(
         private readonly Application $app
     ) {
     }

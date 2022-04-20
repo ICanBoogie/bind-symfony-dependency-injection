@@ -20,7 +20,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
-use Symfony\Component\DependencyInjection\Extension\Extension;
+use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 use function array_keys;
@@ -28,6 +28,7 @@ use function file_exists;
 use function file_put_contents;
 use function getcwd;
 use function is_string;
+use function is_subclass_of;
 
 /**
  * Proxy to Symfony container.
@@ -42,11 +43,6 @@ final class ContainerProxy implements ContainerInterface
     public const ALIAS_CONTAINER = 'container';
     private const CONFIG_FILENAME = 'services.yml';
 
-    /**
-     * @var array<string, mixed>
-     */
-    private array $config;
-
     private ContainerInterface $container;
 
     private function get_container(): ContainerInterface
@@ -56,14 +52,10 @@ final class ContainerProxy implements ContainerInterface
 
     // @codeCoverageIgnoreStart
 
-    /**
-     * @param array<string, mixed> $config
-     */
     public function __construct(
         private readonly Application $app,
-        array $config
+        private readonly Config $config
     ) {
-        $this->config = ContainerConfig::normalize($config);
     }
 
     // @codeCoverageIgnoreEnd
@@ -76,7 +68,7 @@ final class ContainerProxy implements ContainerInterface
         return $this->get($id);
     }
 
-    public function get(string $id)
+    public function get(string $id): object
     {
         return match ($id) {
             self::ALIAS_APP, Application::class => $this->app,
@@ -99,7 +91,7 @@ final class ContainerProxy implements ContainerInterface
         $class = 'ApplicationContainer';
         $pathname = ContainerPathname::from($app);
 
-        if (!$this->config[ContainerConfig::USE_CACHING] || !file_exists($pathname)) {
+        if (!$this->config->use_caching || !file_exists($pathname)) {
             $builder = $this->create_container_builder();
             $builder->compile();
             $this->dump_container($builder, $pathname, $class);
@@ -146,22 +138,26 @@ final class ContainerProxy implements ContainerInterface
      */
     private function compiler_passes(): iterable
     {
-        /* @var class-string<CompilerPassInterface> $class */
-
-        foreach ($this->config[ContainerConfig::COMPILER_PASSES] as $class) {
-            yield new $class(); // @phpstan-ignore-line
+        foreach ($this->config->compiler_passes as $class) {
+            yield new $class();
         }
     }
 
     /**
-     * @return iterable<Extension>
+     * @return iterable<ExtensionInterface>
      */
     private function extensions(): iterable
     {
         $app = $this->app;
 
-        foreach ($this->config[ContainerConfig::EXTENSIONS] as $constructor) {
-            yield $constructor($app, $this);
+        foreach ($this->config->extensions as $constructor) {
+            if (is_subclass_of($constructor, ExtensionWithFactory::class, true)) {
+                yield $constructor::from($app);
+
+                continue;
+            }
+
+            yield new $constructor();
         }
     }
 

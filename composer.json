@@ -58,7 +58,7 @@
 		"icanboogie": {
 			"config-path": "config",
 			"config-constructor": {
-				"container": "ICanBoogie\\Binding\\SymfonyDependencyInjection\\ContainerConfig::synthesize"
+				"container": "ICanBoogie\\Binding\\SymfonyDependencyInjection\\ConfigBuilder"
 			}
 		}
 	}

@@ -30,7 +30,7 @@ final class ApplicationExtensionTest extends TestCase
     {
         $this->container ??= (function (): Container {
             $container = new ContainerBuilder();
-            $extension = new ApplicationExtension(app());
+            $extension = ApplicationExtension::from(app());
             $extension->load([], $container);
 
             return $container;

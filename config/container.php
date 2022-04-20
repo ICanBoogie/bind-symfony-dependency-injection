@@ -9,15 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Binding\SymfonyDependencyInjection;
+use ICanBoogie\Binding\SymfonyDependencyInjection\ConfigBuilder;
+use ICanBoogie\Binding\SymfonyDependencyInjection\Extension\ApplicationExtension;
 
-return [
-
-	ContainerConfig::USE_CACHING => false,
-	ContainerConfig::EXTENSIONS => [
-
-		[ Extension\ApplicationExtension::class, 'from' ]
-
-	]
-
-];
+return function (ConfigBuilder $config): void {
+    $config->add_extension(ApplicationExtension::class);
+};

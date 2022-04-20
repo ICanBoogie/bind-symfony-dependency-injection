@@ -115,30 +115,13 @@ The container is configured using `container` configuration fragments:
 
 // config/container.php
 
-namespace ICanBoogie\Binding\SymfonyDependencyInjection;
+use ICanBoogie\Binding\SymfonyDependencyInjection\ConfigBuilder;
+use ICanBoogie\Binding\SymfonyDependencyInjection\Extension\ApplicationExtension;
 
-return [
-
-	ContainerConfig::USE_CACHING => false,
-	ContainerConfig::EXTENSIONS => [
-
-		[ Extension\ApplicationExtension::class, 'from' ]
-
-	]
-
-];
+return function (ConfigBuilder $config): void {
+    $config->add_extension(ApplicationExtension::class);
+};
 ```
-
-
-
-
-
-### Defining container extensions
-
-Container extensions are defined using [`EXTENSIONS`][]. Use an array of key/value pairs where _key_
-is an optional identifier and _value_ a callable that constructs the extension.
-
-
 
 
 
