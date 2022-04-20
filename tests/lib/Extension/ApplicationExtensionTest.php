@@ -9,8 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Binding\SymfonyDependencyInjection\Extension;
+namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection\Extension;
 
+use ICanBoogie\Binding\SymfonyDependencyInjection\Extension\ApplicationExtension;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Container;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -51,15 +52,15 @@ final class ApplicationExtensionTest extends TestCase
     {
         return $this->build_test_cases(
             <<<EOT
-app
-container
-events
-initial_request
-logger
-request
-routes
-session
-EOT
+            app
+            container
+            events
+            initial_request
+            logger
+            request
+            routes
+            session
+            EOT
         );
     }
 
@@ -76,27 +77,27 @@ EOT
     {
         return $this->build_test_cases(
             <<<EOT
-app.app_path
-app.app_paths
-app.base_path
-app.autoconfig_filters
-app.cache.catalogs
-app.cache.configs
-app.cache.modules
-app.config_constructor
-app.config_path
-app.error_handler
-app.locale_path
-app.repository
-app.repository.cache
-app.repository.cache.configs
-app.repository.files
-app.repository.tmp
-app.repository.var
-app.session
-app.storage_for_configs
-app.storage_for_vars
-EOT
+            app.app_path
+            app.app_paths
+            app.base_path
+            app.autoconfig_filters
+            app.cache.catalogs
+            app.cache.configs
+            app.cache.modules
+            app.config_constructor
+            app.config_path
+            app.error_handler
+            app.locale_path
+            app.repository
+            app.repository.cache
+            app.repository.cache.configs
+            app.repository.files
+            app.repository.tmp
+            app.repository.var
+            app.session
+            app.storage_for_configs
+            app.storage_for_vars
+            EOT
         );
     }
 

@@ -45,7 +45,7 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"ICanBoogie\\Binding\\SymfonyDependencyInjection\\": "tests/lib/"
+			"Test\\ICanBoogie\\Binding\\SymfonyDependencyInjection\\": "tests/lib"
 		},
 		"classmap": [
 			"tests/Application.php"

@@ -9,7 +9,7 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Binding\SymfonyDependencyInjection;
+namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
 class ServiceA
 {

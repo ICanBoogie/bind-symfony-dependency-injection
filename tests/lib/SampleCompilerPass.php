@@ -9,12 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Binding\SymfonyDependencyInjection;
+namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-class SampleCompilerPass implements CompilerPassInterface
+final class SampleCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {

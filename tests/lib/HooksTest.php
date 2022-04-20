@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Binding\SymfonyDependencyInjection;
+namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
+use ICanBoogie\Binding\SymfonyDependencyInjection\ContainerPathname;
+use ICanBoogie\Binding\SymfonyDependencyInjection\ContainerProxy;
 use ICanBoogie\Service\ServiceProvider;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;

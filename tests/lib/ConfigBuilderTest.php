@@ -9,8 +9,10 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Binding\SymfonyDependencyInjection;
+namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
+use ICanBoogie\Binding\SymfonyDependencyInjection\Config;
+use ICanBoogie\Binding\SymfonyDependencyInjection\ConfigBuilder;
 use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
