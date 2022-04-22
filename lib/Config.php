@@ -17,6 +17,22 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 final class Config
 {
     /**
+     * @param array{
+     *     'compiler_passes': class-string<CompilerPassInterface>[],
+     *     'extensions': class-string<ExtensionInterface>[],
+     *     'use_caching': bool
+     * } $an_array
+     */
+    public static function __set_state(array $an_array): self
+    {
+        return new self(
+            $an_array['compiler_passes'],
+            $an_array['extensions'],
+            $an_array['use_caching'],
+        );
+    }
+
+    /**
      * @param class-string<CompilerPassInterface>[] $compiler_passes
      *     Compiler passes give you an opportunity to manipulate other service definitions that have been registered
      *     with the service container. You can read about how to create them in the components section "Compiling the

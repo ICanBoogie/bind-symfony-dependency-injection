@@ -24,7 +24,7 @@ autoload: vendor
 test-dependencies: vendor
 
 .PHONY: test
-test: test-dependencies
+test: test-dependencies clean-sandbox
 	@$(PHPUNIT)
 
 .PHONY: test-coverage
@@ -46,3 +46,7 @@ test-container:
 lint:
 	@XDEBUG_MODE=off phpcs -s
 	@XDEBUG_MODE=off vendor/bin/phpstan
+
+.PHONY: clean-sandbox
+clean-sandbox:
+	@rm ./tests/sandbox/*
