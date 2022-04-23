@@ -9,12 +9,9 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Binding\SymfonyDependencyInjection;
-
 use ICanBoogie\Application;
+use ICanBoogie\Binding\Prototype\ConfigBuilder;
+use ICanBoogie\Binding\SymfonyDependencyInjection\PrototypeCallbacks;
 
-return [
-
-    Application::class . '::get_container' => [ PrototypeCallbacks::class, 'app_get_container' ],
-
-];
+return fn(ConfigBuilder $config) => $config
+    ->bind(Application::class, 'get_container', [ PrototypeCallbacks::class, 'app_get_container' ]);
