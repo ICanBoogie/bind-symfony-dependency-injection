@@ -9,15 +9,12 @@
  * file that was distributed with this source code.
  */
 
-namespace ICanBoogie\Binding\SymfonyDependencyInjection;
-
 use ICanBoogie\Application;
 use ICanBoogie\Application\BootEvent;
 use ICanBoogie\Application\ClearCacheEvent;
+use ICanBoogie\Binding\Event\ConfigBuilder;
+use ICanBoogie\Binding\SymfonyDependencyInjection\EventCallbacks;
 
-return [
-
-    BootEvent::for(Application::class) => [ EventCallbacks::class, 'on_boot' ],
-    ClearCacheEvent::for(Application::class) => [ EventCallbacks::class, 'on_clear_cache' ],
-
-];
+return fn(ConfigBuilder $config) => $config
+    ->attach_to(Application::class, BootEvent::class, [ EventCallbacks::class, 'on_boot' ])
+    ->attach_to(Application::class, ClearCacheEvent::class, [ EventCallbacks::class, 'on_clear_cache' ]);
