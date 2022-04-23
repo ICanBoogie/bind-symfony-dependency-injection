@@ -12,6 +12,5 @@
 use ICanBoogie\Binding\SymfonyDependencyInjection\ConfigBuilder;
 use ICanBoogie\Binding\SymfonyDependencyInjection\Extension\ApplicationExtension;
 
-return function (ConfigBuilder $config): void {
-    $config->add_extension(ApplicationExtension::class);
-};
+return fn(ConfigBuilder $config) => $config
+    ->add_extension(ApplicationExtension::class);

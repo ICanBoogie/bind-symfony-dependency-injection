@@ -45,18 +45,17 @@ final class ConfigBuilderTest extends TestCase
 
     public function test_build(): void
     {
-        $builder = new ConfigBuilder();
-
-        $builder->disable_caching();
-        $builder->add_extension($a1 = $this->mockExtension()::class);
-        $builder->add_extension($a2 = $this->mockExtension()::class);
-        $builder->add_compiler_pass($a3 = $this->mockCompilerPass()::class);
-        $builder->add_compiler_pass($a4 = $this->mockCompilerPass()::class);
-        $builder->enable_caching();
-        $builder->add_extension($b1 = $this->mockExtension()::class);
-        $builder->add_extension($b2 = $this->mockExtension()::class);
-        $builder->add_compiler_pass($c1 = $this->mockCompilerPass()::class);
-        $builder->add_compiler_pass($c2 = $this->mockCompilerPass()::class);
+        $builder = (new ConfigBuilder())
+            ->disable_caching()
+            ->add_extension($a1 = $this->mockExtension()::class)
+            ->add_extension($a2 = $this->mockExtension()::class)
+            ->add_compiler_pass($a3 = $this->mockCompilerPass()::class)
+            ->add_compiler_pass($a4 = $this->mockCompilerPass()::class)
+            ->enable_caching()
+            ->add_extension($b1 = $this->mockExtension()::class)
+            ->add_extension($b2 = $this->mockExtension()::class)
+            ->add_compiler_pass($c1 = $this->mockCompilerPass()::class)
+            ->add_compiler_pass($c2 = $this->mockCompilerPass()::class);
 
         $this->assertEquals(
             new Config(
