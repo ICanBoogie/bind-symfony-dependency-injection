@@ -17,19 +17,11 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 final class Config
 {
     /**
-     * @param array{
-     *     'compiler_passes': class-string<CompilerPassInterface>[],
-     *     'extensions': class-string<ExtensionInterface>[],
-     *     'use_caching': bool
-     * } $an_array
+     * @param array<string, mixed> $an_array
      */
     public static function __set_state(array $an_array): self
     {
-        return new self(
-            $an_array['compiler_passes'],
-            $an_array['extensions'],
-            $an_array['use_caching'],
-        );
+        return new self(...$an_array);
     }
 
     /**

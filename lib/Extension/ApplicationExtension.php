@@ -18,6 +18,8 @@ use Symfony\Component\DependencyInjection\Definition;
 use Symfony\Component\DependencyInjection\Extension\Extension;
 use Symfony\Component\DependencyInjection\Reference;
 
+use function assert;
+use function is_string;
 use function strlen;
 use function strtr;
 use function substr;
@@ -29,9 +31,6 @@ final class ApplicationExtension extends Extension implements ExtensionWithFacto
     private const GETTER_PREFIX = 'get_';
     private const LAZY_GETTER_PREFIX = 'lazy_get_';
 
-    /**
-     * Create a new instance.
-     */
     public static function from(Application $app): self
     {
         return new self($app);
@@ -61,7 +60,9 @@ final class ApplicationExtension extends Extension implements ExtensionWithFacto
 
     private function add_parameters(ContainerBuilder $container): void
     {
-        foreach ($this->app->config as $param => $value) {
+        foreach ($this->app->auto_config as $param => $value) {
+            assert(is_string($param));
+
             $param = $this->normalize_param($param);
             $container->setParameter("app.$param", $value);
         }

@@ -23,7 +23,7 @@ final class ContainerPathname
 
     public static function from(Application $app): self
     {
-        return new self($app->config[AppConfig::REPOSITORY_CACHE] . DIRECTORY_SEPARATOR . self::FILENAME);
+        return new self($app->config->repository_cache . self::FILENAME);
     }
 
     private function __construct(

@@ -185,7 +185,7 @@ final class ContainerProxy implements ContainerInterface
     {
         $collection = [];
 
-        foreach (array_keys($this->app->config[Autoconfig::CONFIG_PATH]) as $path) {
+        foreach (array_keys($this->app->auto_config[Autoconfig::CONFIG_PATH]) as $path) {
             $pathname = $path . DIRECTORY_SEPARATOR . self::CONFIG_FILENAME;
 
             if (!file_exists($pathname)) {
