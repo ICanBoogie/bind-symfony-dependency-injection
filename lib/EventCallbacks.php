@@ -20,21 +20,21 @@ use function unlink;
 final class EventCallbacks
 {
     // @codeCoverageIgnoreStart
-    public static function on_boot(Application\BootEvent $event, Application $app): void
+    public static function on_boot(Application\BootEvent $event): void
     {
         ServiceProvider::define(
             new ContainerProxy(
-                $app,
-                $app->configs[ConfigBuilder::FRAGMENT_NAME]
+                $event->app,
+                $event->app->configs[ConfigBuilder::FRAGMENT_NAME]
             )
         );
     }
 
     // @codeCoverageIgnoreEnd
 
-    public static function on_clear_cache(Application\ClearCacheEvent $event, Application $app): void
+    public static function on_clear_cache(Application\ClearCacheEvent $event): void
     {
-        $pathname = ContainerPathname::from($app);
+        $pathname = ContainerPathname::from($event->app);
 
         if (!file_exists($pathname)) {
             return;

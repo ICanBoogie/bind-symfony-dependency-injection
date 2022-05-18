@@ -19,6 +19,6 @@ final class PrototypeCallbacks
 {
     public static function app_get_container(Application $app): ContainerInterface
     {
-        return ServiceProvider::provide(ContainerProxy::ALIAS_CONTAINER);
+        return ServiceProvider::provide(ContainerProxy::ALIAS_CONTAINER); // @phpstan-ignore-line
     }
 }
