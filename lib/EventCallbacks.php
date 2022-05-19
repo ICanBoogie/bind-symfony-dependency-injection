@@ -25,7 +25,7 @@ final class EventCallbacks
         ServiceProvider::define(
             new ContainerProxy(
                 $event->app,
-                $event->app->configs[Config::class]
+                $event->app->configs->config_for_class(Config::class)
             )
         );
     }
