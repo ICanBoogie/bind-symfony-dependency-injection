@@ -20,10 +20,10 @@ use function is_subclass_of;
 
 final class ConfigBuilder implements Builder
 {
-    /**
-     * Fragment name for the configuration.
-     */
-    public const FRAGMENT_NAME = 'container';
+    public static function get_fragment_filename(): string
+    {
+        return 'container';
+    }
 
     public function build(): Config
     {
