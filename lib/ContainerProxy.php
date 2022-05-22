@@ -15,6 +15,7 @@ use ICanBoogie\Accessor\AccessorTrait;
 use ICanBoogie\Application;
 use ICanBoogie\Autoconfig\Autoconfig;
 use ICanBoogie\Binding\SymfonyDependencyInjection\Extension\ApplicationExtension;
+use olvlvl\SymfonyDependencyInjectionProxy\ProxyDumper;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -201,6 +202,7 @@ final class ContainerProxy implements ContainerInterface
     private function dump_container(ContainerBuilder $container, ContainerPathname $pathname, string $class): void
     {
         $dumper = new PhpDumper($container);
+        $dumper->setProxyDumper(new ProxyDumper());
 
         file_put_contents($pathname, $dumper->dump([ 'class' => $class ]));
     }
