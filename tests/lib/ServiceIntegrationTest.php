@@ -11,8 +11,11 @@
 
 namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
+use ICanBoogie\ConfigProvider;
+use ICanBoogie\ServiceProvider;
 use ICanBoogie\Storage\Storage;
 use PHPUnit\Framework\TestCase;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 use function ICanBoogie\app;
 
@@ -25,10 +28,9 @@ final class ServiceIntegrationTest extends TestCase
      */
     public function testService(string $service_id, string $service_class): void
     {
-        $service = app()->$service_id;
+        $actual = app()->service_for_id($service_id, $service_class);
 
-        $this->assertInstanceOf($service_class, $service);
-        $this->assertSame($service, app()->container->get("public.app.$service_id"));
+        $this->assertInstanceOf($service_class, $actual);
     }
 
     // @phpstan-ignore-next-line
@@ -36,14 +38,16 @@ final class ServiceIntegrationTest extends TestCase
     {
         return [
 
-            [ 'vars', Storage::class ],
+            [ 'test.app.vars', Storage::class ],
+            [ 'test.config_provider', ConfigProvider::class ],
+            [  'test.service_provider',  ServiceProvider::class ],
 
         ];
     }
 
     public function set_compiler_pass_parameter(): void
     {
-        $container = app()->container->get('service_container');
+        $container = app()->service_for_id('service_container', ContainerInterface::class);
 
         $this->assertEquals(
             "Hello world!",

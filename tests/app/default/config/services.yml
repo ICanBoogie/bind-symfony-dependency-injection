@@ -2,14 +2,20 @@ parameters:
   compiler_pass_parameter: ~
 
 services:
+  _defaults:
+    public: true
 
   service_c:
     class: Test\ICanBoogie\Binding\SymfonyDependencyInjection\ServiceC
     arguments:
       - "@service_a"
       - "@service_b"
-    public: true
 
-  public.app.vars:
+  test.app.vars:
     alias: app.vars
-    public: true
+
+  test.config_provider:
+    alias: ICanBoogie\ConfigProvider
+
+  test.service_provider:
+    alias: ICanBoogie\ServiceProvider

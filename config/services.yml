@@ -1,4 +1,12 @@
 services:
+  _defaults:
+    autowire: true
+
+  ICanBoogie\ConfigProvider:
+    factory: [ ICanBoogie\Binding\SymfonyDependencyInjection\Factory, build_config_provider ]
+
+  ICanBoogie\ServiceProvider:
+    alias: ICanBoogie\Application
 
   app.vars:
     class: ICanBoogie\Storage\Storage

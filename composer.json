@@ -47,10 +47,7 @@
 	"autoload-dev": {
 		"psr-4": {
 			"Test\\ICanBoogie\\Binding\\SymfonyDependencyInjection\\": "tests/lib"
-		},
-		"classmap": [
-			"tests/Application.php"
-		]
+		}
 	},
 	"scripts": {
 		"post-autoload-dump": "ICanBoogie\\Autoconfig\\Hooks::on_autoload_dump"
