@@ -41,5 +41,7 @@ final class EventCallbacks
         }
 
         unlink($pathname);
+
+        $event->cleared("container ($pathname)");
     }
 }
