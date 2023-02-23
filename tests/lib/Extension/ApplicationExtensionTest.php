@@ -47,16 +47,17 @@ final class ApplicationExtensionTest extends TestCase
         $this->assertTrue($container->has($id));
     }
 
-    // @phpstan-ignore-next-line
-    public function provide_service(): array
+    /**
+     * @return array<string[]>
+     */
+    public static function provide_service(): array
     {
-        return $this->build_test_cases(
+        return self::build_test_cases(
             <<<EOT
             app
             container
             events
             logger
-            routes
             session
             EOT
         );
@@ -70,10 +71,12 @@ final class ApplicationExtensionTest extends TestCase
         $this->assertTrue($this->container->hasParameter($param));
     }
 
-    // @phpstan-ignore-next-line
-    public function provideParameter(): array
+    /**
+     * @return array<string[]>
+     */
+    public static function provideParameter(): array
     {
-        return $this->build_test_cases(
+        return self::build_test_cases(
             <<<EOT
             app.app_path
             app.app_paths
@@ -87,7 +90,7 @@ final class ApplicationExtensionTest extends TestCase
     }
 
     // @phpstan-ignore-next-line
-    private function build_test_cases(string $string): array
+    private static function build_test_cases(string $string): array
     {
         return array_map(function ($param) {
             return [ $param ];

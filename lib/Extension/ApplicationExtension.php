@@ -41,7 +41,6 @@ final class ApplicationExtension extends Extension implements ExtensionWithFacto
     ) {
     }
 
-    // @phpstan-ignore-next-line
     public function load(array $configs, ContainerBuilder $container): void
     {
         $container->setDefinition(

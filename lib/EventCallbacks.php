@@ -19,18 +19,15 @@ use function unlink;
 
 final class EventCallbacks
 {
-    // @codeCoverageIgnoreStart
     public static function on_boot(Application\BootEvent $event): void
     {
         ServiceProvider::define(
             new ContainerProxy(
                 $event->app,
-                $event->app->configs->config_for_class(Config::class)
+                $event->app->config_for_class(Config::class)
             )
         );
     }
-
-    // @codeCoverageIgnoreEnd
 
     public static function on_clear_cache(Application\ClearCacheEvent $event): void
     {

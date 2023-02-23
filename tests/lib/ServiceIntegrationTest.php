@@ -33,8 +33,10 @@ final class ServiceIntegrationTest extends TestCase
         $this->assertInstanceOf($service_class, $actual);
     }
 
-    // @phpstan-ignore-next-line
-    public function provideService(): array
+    /**
+     * @return array<array{ string, class-string }>
+     */
+    public static function provideService(): array
     {
         return [
 
@@ -45,8 +47,10 @@ final class ServiceIntegrationTest extends TestCase
         ];
     }
 
-    public function set_compiler_pass_parameter(): void
+    public function test_compiler_pass_parameter(): void
     {
+        $this->markTestSkipped();
+
         $container = app()->service_for_id('service_container', ContainerInterface::class);
 
         $this->assertEquals(

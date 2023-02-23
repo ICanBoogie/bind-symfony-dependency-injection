@@ -18,6 +18,9 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 use function is_subclass_of;
 
+/**
+ * @implements Builder<Config>
+ */
 final class ConfigBuilder implements Builder
 {
     public static function get_fragment_filename(): string
@@ -44,7 +47,7 @@ final class ConfigBuilder implements Builder
      */
     public function add_compiler_pass(string $compiler_pass_class): self
     {
-        if (!is_subclass_of($compiler_pass_class, CompilerPassInterface::class, true)) {
+        if (!is_subclass_of($compiler_pass_class, CompilerPassInterface::class)) {
             throw new InvalidArgumentException("Compiler pass must implement " . CompilerPassInterface::class);
         }
 
@@ -63,7 +66,7 @@ final class ConfigBuilder implements Builder
      */
     public function add_extension(string $extension_class): self
     {
-        if (!is_subclass_of($extension_class, ExtensionInterface::class, true)) {
+        if (!is_subclass_of($extension_class, ExtensionInterface::class)) {
             throw new InvalidArgumentException("Extension must implement " . ExtensionInterface::class);
         }
 
