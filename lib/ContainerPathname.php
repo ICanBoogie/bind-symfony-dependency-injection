@@ -13,11 +13,12 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\AppConfig;
 use ICanBoogie\Application;
+use Stringable;
 
 /**
  * Representation of a container pathname
  */
-final class ContainerPathname
+final class ContainerPathname implements Stringable
 {
     private const FILENAME = 'container-compiled.php';
 

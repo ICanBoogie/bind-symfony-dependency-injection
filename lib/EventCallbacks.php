@@ -31,7 +31,7 @@ final class EventCallbacks
 
     public static function on_clear_cache(Application\ClearCacheEvent $event): void
     {
-        $pathname = ContainerPathname::from($event->app);
+        $pathname = (string) ContainerPathname::from($event->app);
 
         if (!file_exists($pathname)) {
             return;

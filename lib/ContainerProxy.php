@@ -11,7 +11,6 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
-use ICanBoogie\Accessor\AccessorTrait;
 use ICanBoogie\Application;
 use ICanBoogie\Autoconfig\Autoconfig;
 use ICanBoogie\Binding\SymfonyDependencyInjection\Extension\ApplicationExtension;
@@ -33,23 +32,14 @@ use function is_subclass_of;
 
 /**
  * Proxy to Symfony container.
- *
- * @property-read ContainerInterface $container
  */
 final class ContainerProxy implements ContainerInterface
 {
-    use AccessorTrait;
-
     public const ALIAS_APP = ApplicationExtension::APP_SERVICE;
     public const ALIAS_CONTAINER = 'container';
     private const CONFIG_FILENAME = 'services.yml';
 
-    private ContainerInterface $container;
-
-    private function get_container(): ContainerInterface
-    {
-        return $this->container ??= $this->instantiate_container();
-    }
+    public readonly ContainerInterface $container;
 
     // @codeCoverageIgnoreStart
 
@@ -57,6 +47,7 @@ final class ContainerProxy implements ContainerInterface
         private readonly Application $app,
         private readonly Config $config
     ) {
+        $this->container = $this->instantiate_container();
     }
 
     // @codeCoverageIgnoreEnd
@@ -73,8 +64,8 @@ final class ContainerProxy implements ContainerInterface
     {
         return match ($id) {
             self::ALIAS_APP, Application::class => $this->app,
-            self::ALIAS_CONTAINER => $this->get_container(),
-            default => $this->get_container()->get($id),
+            self::ALIAS_CONTAINER => $this->container,
+            default => $this->container->get($id),
         };
     }
 
@@ -82,15 +73,16 @@ final class ContainerProxy implements ContainerInterface
     {
         return match ($id) {
             self::ALIAS_APP, Application::class, self::ALIAS_CONTAINER => true,
-            default => $this->get_container()->has($id),
+            default => $this->container->has($id),
         };
     }
 
     private function instantiate_container(): ContainerInterface
     {
         $app = $this->app;
-        $class = 'ApplicationContainer';
         $pathname = ContainerPathname::from($app);
+        /** @var class-string<\Symfony\Component\DependencyInjection\ContainerInterface> $class */
+        $class = 'ApplicationContainer';
 
         if (!$this->config->use_caching || !file_exists($pathname)) {
             $builder = $this->create_container_builder();
@@ -100,9 +92,7 @@ final class ContainerProxy implements ContainerInterface
 
         require $pathname;
 
-        /* @var $container \Symfony\Component\DependencyInjection\ContainerInterface */
-
-        $container = new $class(); // @phpstan-ignore-line
+        $container = new $class();
         $container->set(Application::class, $app);
 
         return $container;
@@ -152,7 +142,7 @@ final class ContainerProxy implements ContainerInterface
         $app = $this->app;
 
         foreach ($this->config->extensions as $constructor) {
-            if (is_subclass_of($constructor, ExtensionWithFactory::class, true)) {
+            if (is_subclass_of($constructor, ExtensionWithFactory::class)) {
                 yield $constructor::from($app);
 
                 continue;
