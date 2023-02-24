@@ -59,7 +59,7 @@ final class ApplicationExtension extends Extension implements ExtensionWithFacto
 
     private function add_parameters(ContainerBuilder $container): void
     {
-        foreach ($this->app->auto_config as $param => $value) {
+        foreach ($this->app->autoconfig as $param => $value) {
             assert(is_string($param));
 
             $param = $this->normalize_param($param);
