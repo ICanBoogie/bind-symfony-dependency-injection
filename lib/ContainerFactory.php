@@ -13,7 +13,6 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
 use ICanBoogie\Autoconfig\Autoconfig;
-use ICanBoogie\Binding\SymfonyDependencyInjection\Extension\ApplicationExtension;
 use olvlvl\SymfonyDependencyInjectionProxy\ProxyDumper;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
@@ -24,68 +23,40 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
 
 use function array_keys;
+use function assert;
 use function file_exists;
 use function file_put_contents;
 use function getcwd;
 use function is_string;
 use function is_subclass_of;
 
+use const DIRECTORY_SEPARATOR;
+
 /**
  * Proxy to Symfony container.
  */
-final class ContainerProxy implements ContainerInterface
+final class ContainerFactory
 {
-    public const ALIAS_APP = ApplicationExtension::APP_SERVICE;
-    public const ALIAS_CONTAINER = 'container';
     public const CONFIG_FILENAME = 'services.yml';
 
     /**
      * Creates a container proxy from the application instance.
      */
-    public static function from(Application $app): self
+    public static function from(Application $app): ContainerInterface
     {
-        return new self(
+        return (new self(
             $app,
             $app->config_for_class(Config::class)
-        );
+        ))->container;
     }
 
-    // @codeCoverageIgnoreStart
-
-    public readonly ContainerInterface $container;
+    private readonly ContainerInterface $container;
 
     private function __construct(
         private readonly Application $app,
         private readonly Config $config
     ) {
         $this->container = $this->instantiate_container();
-    }
-
-    // @codeCoverageIgnoreEnd
-
-    /**
-     * Note: We need the proxy to be a callable to satisfy `ICanBoogie\Service\ServiceProvider`.
-     */
-    public function __invoke(string $id): object
-    {
-        return $this->get($id);
-    }
-
-    public function get(string $id): object
-    {
-        return match ($id) {
-            self::ALIAS_APP, Application::class => $this->app,
-            self::ALIAS_CONTAINER => $this->container,
-            default => $this->container->get($id),
-        };
-    }
-
-    public function has(string $id): bool
-    {
-        return match ($id) {
-            self::ALIAS_APP, Application::class, self::ALIAS_CONTAINER => true,
-            default => $this->container->has($id),
-        };
     }
 
     private function instantiate_container(): ContainerInterface
@@ -168,7 +139,7 @@ final class ContainerProxy implements ContainerInterface
         $collection = $this->collect_services();
 
         if (!$collection) {
-            return; // @codeCoverageIgnore
+            return;
         }
 
         $cwd = getcwd();

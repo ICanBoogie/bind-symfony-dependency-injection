@@ -96,7 +96,7 @@ The following example demonstrates how the service provider and the service cont
 
 use ICanBoogie\Service\ServiceProvider;
 
-/* @var $proxy \ICanBoogie\Binding\SymfonyDependencyInjection\ContainerProxy */
+/* @var $proxy \ICanBoogie\Binding\SymfonyDependencyInjection\ContainerFactory */
 
 $proxy = ServiceProvider::defined();
 $container = $proxy->container;

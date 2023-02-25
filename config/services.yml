@@ -2,6 +2,9 @@ services:
   _defaults:
     autowire: true
 
+  ICanBoogie\Application:
+    synthetic: true
+
   ICanBoogie\ConfigProvider:
     factory: [ ICanBoogie\Binding\SymfonyDependencyInjection\Factory, build_config_provider ]
 

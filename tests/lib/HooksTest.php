@@ -12,8 +12,7 @@
 namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Binding\SymfonyDependencyInjection\ContainerPathname;
-use ICanBoogie\Binding\SymfonyDependencyInjection\ContainerProxy;
-use ICanBoogie\Service\ServiceProvider;
+use ICanBoogie\Binding\SymfonyDependencyInjection\ContainerFactory;
 use PHPUnit\Framework\TestCase;
 use Psr\Container\ContainerInterface;
 use Symfony\Component\DependencyInjection\Container;
@@ -27,7 +26,7 @@ class HooksTest extends TestCase
 {
     public function test_service_provider_should_be_defined_during_app_boot(): void
     {
-        $this->assertInstanceOf(ContainerProxy::class, ServiceProvider::defined());
+        $this->assertInstanceOf(ContainerFactory::class, ServiceProvider::defined());
     }
 
     public function test_compiled_container_should_be_deleted_on_app_clear_cache(): void
