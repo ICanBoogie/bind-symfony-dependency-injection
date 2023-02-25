@@ -37,13 +37,24 @@ final class ContainerProxy implements ContainerInterface
 {
     public const ALIAS_APP = ApplicationExtension::APP_SERVICE;
     public const ALIAS_CONTAINER = 'container';
-    private const CONFIG_FILENAME = 'services.yml';
+    public const CONFIG_FILENAME = 'services.yml';
 
-    public readonly ContainerInterface $container;
+    /**
+     * Creates a container proxy from the application instance.
+     */
+    public static function from(Application $app): self
+    {
+        return new self(
+            $app,
+            $app->config_for_class(Config::class)
+        );
+    }
 
     // @codeCoverageIgnoreStart
 
-    public function __construct(
+    public readonly ContainerInterface $container;
+
+    private function __construct(
         private readonly Application $app,
         private readonly Config $config
     ) {

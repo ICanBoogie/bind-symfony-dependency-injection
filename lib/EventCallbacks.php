@@ -22,10 +22,7 @@ final class EventCallbacks
     public static function on_boot(Application\BootEvent $event): void
     {
         ServiceProvider::define(
-            new ContainerProxy(
-                $event->app,
-                $event->app->config_for_class(Config::class)
-            )
+            ContainerProxy::from($event->app)
         );
     }
 
