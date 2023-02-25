@@ -14,10 +14,10 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 use ICanBoogie\Application;
 use ICanBoogie\Autoconfig\Autoconfig;
 use olvlvl\SymfonyDependencyInjectionProxy\ProxyDumper;
-use Psr\Container\ContainerInterface;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
@@ -33,15 +33,14 @@ use function is_subclass_of;
 use const DIRECTORY_SEPARATOR;
 
 /**
- * Proxy to Symfony container.
+ * Creates the dependency-injection container.
+ *
+ * @codeCoverageIgnore
  */
 final class ContainerFactory
 {
     public const CONFIG_FILENAME = 'services.yml';
 
-    /**
-     * Creates a container proxy from the application instance.
-     */
     public static function from(Application $app): ContainerInterface
     {
         return (new self(
@@ -63,13 +62,13 @@ final class ContainerFactory
     {
         $app = $this->app;
         $pathname = ContainerPathname::from($app);
-        /** @var class-string<\Symfony\Component\DependencyInjection\ContainerInterface> $class */
+        /** @var class-string<ContainerInterface> $class */
         $class = 'ApplicationContainer';
 
         if (!$this->config->use_caching || !file_exists($pathname)) {
             $builder = $this->create_container_builder();
             $builder->compile();
-            $this->dump_container($builder, $pathname, $class);
+            self::dump_container($builder, $pathname, $class);
         }
 
         require $pathname;
@@ -171,7 +170,7 @@ final class ContainerFactory
         return $collection;
     }
 
-    private function dump_container(ContainerBuilder $container, ContainerPathname $pathname, string $class): void
+    private static function dump_container(ContainerBuilder $container, ContainerPathname $pathname, string $class): void
     {
         $dumper = new PhpDumper($container);
         $dumper->setProxyDumper(new ProxyDumper());

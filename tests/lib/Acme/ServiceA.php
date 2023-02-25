@@ -9,11 +9,8 @@
  * file that was distributed with this source code.
  */
 
-namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
+namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme;
 
-class ServiceB
+class ServiceA
 {
-    public function __construct(ServiceA $a)
-    {
-    }
 }

@@ -39,31 +39,6 @@ final class ApplicationExtensionTest extends TestCase
     }
 
     /**
-     * @dataProvider provide_service
-     */
-    public function test_service(string $id): void
-    {
-        $container = $this->container;
-        $this->assertTrue($container->has($id));
-    }
-
-    /**
-     * @return array<string[]>
-     */
-    public static function provide_service(): array
-    {
-        return self::build_test_cases(
-            <<<EOT
-            app
-            container
-            events
-            logger
-            session
-            EOT
-        );
-    }
-
-    /**
      * @dataProvider provideParameter
      */
     public function testParameter(string $param): void

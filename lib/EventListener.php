@@ -11,14 +11,17 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
-use ICanBoogie\Application;
+use ICanBoogie\Application\ClearCacheEvent;
 
 use function file_exists;
 use function unlink;
 
 final class EventListener
 {
-    public static function on_clear_cache(Application\ClearCacheEvent $event): void
+    /**
+     * Unlinks the dumped container on {@link ClearCacheEvent}.
+     */
+    public static function on_clear_cache(ClearCacheEvent $event): void
     {
         $pathname = (string) ContainerPathname::from($event->app);
 

@@ -15,22 +15,24 @@ use ICanBoogie\ConfigProvider;
 use ICanBoogie\ServiceProvider;
 use ICanBoogie\Storage\Storage;
 use PHPUnit\Framework\TestCase;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\ServiceA;
+use Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\ServiceB;
+use Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\ServiceC;
 
 use function ICanBoogie\app;
 
-final class ServiceIntegrationTest extends TestCase
+final class IntegrationTest extends TestCase
 {
     /**
      * @dataProvider provideService
      *
-     * @param class-string $service_class
+     * @param class-string $class
      */
-    public function testService(string $service_id, string $service_class): void
+    public function testService(string $id, string $class): void
     {
-        $actual = app()->service_for_id($service_id, $service_class);
+        $actual = app()->service_for_id($id, $class);
 
-        $this->assertInstanceOf($service_class, $actual);
+        $this->assertInstanceOf($class, $actual);
     }
 
     /**
@@ -40,22 +42,21 @@ final class ServiceIntegrationTest extends TestCase
     {
         return [
 
+            [ 'service_a', ServiceA::class ],
+            [ 'service_b', ServiceB::class ],
+            [ 'service_c', ServiceC::class ],
             [ 'test.app.vars', Storage::class ],
             [ 'test.config_provider', ConfigProvider::class ],
-            [  'test.service_provider',  ServiceProvider::class ],
+            [ 'test.service_provider', ServiceProvider::class ],
 
         ];
     }
 
     public function test_compiler_pass_parameter(): void
     {
-        $this->markTestSkipped();
-
-        $container = app()->service_for_id('service_container', ContainerInterface::class);
-
         $this->assertEquals(
             "Hello world!",
-            $container->getParameter('compiler_pass_parameter')
+            app()->container->getParameter('compiler_pass_parameter')
         );
     }
 }

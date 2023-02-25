@@ -13,6 +13,8 @@ namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Binding\SymfonyDependencyInjection\Config;
 use PHPUnit\Framework\TestCase;
+use Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\FakeCompilerPass;
+use Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\FakeExtension;
 
 final class ConfigTest extends TestCase
 {

@@ -9,15 +9,16 @@
  * file that was distributed with this source code.
  */
 
-namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
+namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme;
 
+use LogicException;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 
-final class SampleCompilerPass implements CompilerPassInterface
+final class FakeCompilerPass implements CompilerPassInterface
 {
     public function process(ContainerBuilder $container): void
     {
-        $container->setParameter('compiler_pass_parameter', 'Hello world!');
+        throw new LogicException();
     }
 }

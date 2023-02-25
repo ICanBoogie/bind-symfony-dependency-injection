@@ -19,6 +19,8 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use function is_subclass_of;
 
 /**
+ * Builds a {@link Config}.
+ *
  * @implements Builder<Config>
  */
 final class ConfigBuilder implements Builder

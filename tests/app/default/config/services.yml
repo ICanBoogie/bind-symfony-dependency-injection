@@ -6,7 +6,7 @@ services:
     public: true
 
   service_c:
-    class: Test\ICanBoogie\Binding\SymfonyDependencyInjection\ServiceC
+    class: Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\ServiceC
     arguments:
       - "@service_a"
       - "@service_b"

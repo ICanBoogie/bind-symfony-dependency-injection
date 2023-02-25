@@ -16,7 +16,7 @@ use ICanBoogie\Application;
 use Stringable;
 
 /**
- * Representation of a container pathname
+ * Represents of a container pathname.
  */
 final class ContainerPathname implements Stringable
 {

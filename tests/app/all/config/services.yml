@@ -1,11 +1,11 @@
 services:
 
   service_a:
-    class: Test\ICanBoogie\Binding\SymfonyDependencyInjection\ServiceA
+    class: Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\ServiceA
     public: true
 
   service_b:
-    class: Test\ICanBoogie\Binding\SymfonyDependencyInjection\ServiceB
+    class: Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\ServiceB
     arguments:
       - "@service_a"
     public: true

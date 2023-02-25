@@ -11,12 +11,20 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
-use function ICanBoogie\app;
+use ICanBoogie\Application;
 
+/**
+ * A helper class to define services that are provided as properties on the application.
+ */
 final class ServiceAccessor
 {
-    public static function get(string $id): object
+    public function __construct(
+        private readonly Application $app
+    ) {
+    }
+
+    public function get(string $id): object
     {
-        return app()->$id;
+        return $this->app->$id;
     }
 }
