@@ -19,3 +19,6 @@ services:
 
   test.service_provider:
     alias: ICanBoogie\ServiceProvider
+
+  test.autoconfig:
+    alias: ICanBoogie\Autoconfig\Autoconfig

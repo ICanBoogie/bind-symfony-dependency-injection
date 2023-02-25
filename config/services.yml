@@ -6,6 +6,10 @@ services:
   ICanBoogie\Application:
     synthetic: true
 
+  ICanBoogie\Autoconfig\Autoconfig:
+    factory: [ '@service_accessor', get ]
+    arguments: [ autoconfig ]
+
   ICanBoogie\ConfigProvider:
     factory: [ '@service_accessor', get ]
     arguments: [ configs ]

@@ -11,6 +11,7 @@
 
 namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
+use ICanBoogie\Autoconfig\Autoconfig;
 use ICanBoogie\ConfigProvider;
 use ICanBoogie\ServiceProvider;
 use ICanBoogie\Storage\Storage;
@@ -48,6 +49,7 @@ final class IntegrationTest extends TestCase
             [ 'test.app.vars', Storage::class ],
             [ 'test.config_provider', ConfigProvider::class ],
             [ 'test.service_provider', ServiceProvider::class ],
+            [ 'test.autoconfig', Autoconfig::class ],
 
         ];
     }
