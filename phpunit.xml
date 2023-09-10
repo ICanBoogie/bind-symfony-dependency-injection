@@ -1,15 +1,17 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.5/phpunit.xsd" colors="true"
-		 bootstrap="./tests/bootstrap.php">
-	<coverage>
-		<include>
-			<directory suffix=".php">./lib</directory>
-		</include>
-	</coverage>
-	<testsuites>
-		<testsuite name="icanboogie/bind-symfony-dependency-injection">
-			<directory>./tests/lib</directory>
-		</testsuite>
-	</testsuites>
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
+         colors="true"
+         bootstrap="./tests/bootstrap.php"
+>
+    <testsuites>
+        <testsuite name="icanboogie/bind-symfony-dependency-injection">
+            <directory>./tests/lib</directory>
+        </testsuite>
+    </testsuites>
+    <source>
+        <include>
+            <directory>./lib</directory>
+        </include>
+    </source>
 </phpunit>
