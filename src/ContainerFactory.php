@@ -12,7 +12,6 @@
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
-use ICanBoogie\Autoconfig\Autoconfig;
 use olvlvl\SymfonyDependencyInjectionProxy\ProxyDumper;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -170,8 +169,13 @@ final class ContainerFactory
         return $collection;
     }
 
-    private static function dump_container(ContainerBuilder $container, ContainerPathname $pathname, string $class): void
-    {
+    private static function dump_container(
+        ContainerBuilder $container,
+        ContainerPathname $pathname,
+        string $class
+    ): void {
+        $pathname->assert_writeable();
+
         $dumper = new PhpDumper($container);
         $dumper->setProxyDumper(new ProxyDumper());
 

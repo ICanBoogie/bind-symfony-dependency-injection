@@ -17,8 +17,6 @@ use function var_export;
 
 final class SetStateHelper
 {
-    private const SANDBOX = __DIR__ . '/sandbox';
-
     /**
      * @template T of object
      *
@@ -30,7 +28,7 @@ final class SetStateHelper
     {
         $code = '<?php return ' . var_export($object, true) . ';';
         $filename = uniqid();
-        $pathname = self::SANDBOX . "/$filename.php";
+        $pathname = SANDBOX . "/$filename.php";
 
         file_put_contents($pathname, $code);
 

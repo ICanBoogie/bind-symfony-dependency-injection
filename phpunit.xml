@@ -6,12 +6,12 @@
 >
     <testsuites>
         <testsuite name="icanboogie/bind-symfony-dependency-injection">
-            <directory>./tests/lib</directory>
+            <directory>./tests/src</directory>
         </testsuite>
     </testsuites>
     <source>
         <include>
-            <directory>./lib</directory>
+            <directory>./src</directory>
         </include>
     </source>
 </phpunit>

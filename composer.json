@@ -34,17 +34,17 @@
 		"symfony/yaml": "^6.3"
 	},
 	"require-dev": {
-		"phpstan/phpstan": "^1.5",
-		"phpunit/phpunit": "^10.0"
+		"phpstan/phpstan": "^1.10",
+		"phpunit/phpunit": "^10.3"
 	},
 	"autoload": {
 		"psr-4": {
-			"ICanBoogie\\Binding\\SymfonyDependencyInjection\\": "lib/"
+			"ICanBoogie\\Binding\\SymfonyDependencyInjection\\": "src"
 		}
 	},
 	"autoload-dev": {
 		"psr-4": {
-			"Test\\ICanBoogie\\Binding\\SymfonyDependencyInjection\\": "tests/lib"
+			"Test\\ICanBoogie\\Binding\\SymfonyDependencyInjection\\": "tests/src"
 		}
 	},
 	"scripts": {

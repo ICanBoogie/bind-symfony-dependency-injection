@@ -11,9 +11,13 @@
 
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
-use ICanBoogie\AppConfig;
 use ICanBoogie\Application;
+use RuntimeException;
 use Stringable;
+
+use function dirname;
+use function file_exists;
+use function is_writeable;
 
 /**
  * Represents of a container pathname.
@@ -24,7 +28,7 @@ final class ContainerPathname implements Stringable
 
     public static function from(Application $app): self
     {
-        return new self($app->config->repository_cache . self::FILENAME);
+        return new self($app->config->var_cache . self::FILENAME);
     }
 
     private function __construct(
@@ -35,5 +39,18 @@ final class ContainerPathname implements Stringable
     public function __toString(): string
     {
         return $this->pathname;
+    }
+
+    public function assert_writeable(): void
+    {
+        $dir = dirname($this->pathname);
+
+        if (!file_exists($dir)) {
+            throw new RuntimeException("The directory '$dir' does not exist");
+        }
+
+        if (!is_writeable($dir)) {
+            throw new RuntimeException("The directory '$dir' is not writeable");
+        }
     }
 }
