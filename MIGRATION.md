@@ -2,6 +2,11 @@
 
 # v5.0 to v6.0
 
+### New requirements
+
+- Requires PHP v8.2+
+- Requires olvlvl/symfony-dependency-injection-proxy v6.0+
+
 ## Breaking changes
 
 - The container proxy has been replaced by a container factory. The container is now created right away and returned. Also, the package doesn't deal with `ICanBoogie\Service` anymore and let ICanBoogie deal with it instead. The prototype method `Application::get_container` and `ApplicationBindings` are removed. The event listener for `BootEvent` is removed.
