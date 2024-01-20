@@ -1,8 +1,13 @@
 <?xml version="1.0"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.3/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/10.5/phpunit.xsd"
+         beStrictAboutCoverageMetadata="true"
+         beStrictAboutOutputDuringTests="true"
+         bootstrap="tests/bootstrap.php"
+         cacheDirectory=".phpunit.cache"
          colors="true"
-         bootstrap="./tests/bootstrap.php"
+         displayDetailsOnTestsThatTriggerDeprecations="true"
+         executionOrder="depends,defects"
 >
     <testsuites>
         <testsuite name="icanboogie/bind-symfony-dependency-injection">
@@ -11,7 +16,7 @@
     </testsuites>
     <source>
         <include>
-            <directory>./src</directory>
+            <directory>src</directory>
         </include>
     </source>
 </phpunit>
