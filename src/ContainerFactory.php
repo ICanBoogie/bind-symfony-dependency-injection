@@ -82,11 +82,24 @@ final class ContainerFactory
     {
         $container = new ContainerBuilder();
 
+        $this->apply_parameters($container);
         $this->apply_services($container);
         $this->apply_compiler_passes($container);
         $this->apply_extensions($container);
 
         return $container;
+    }
+
+    private function apply_parameters(ContainerBuilder $container): void
+    {
+        $config = $this->app->config;
+
+        $container->setParameter("app.config.var", $config->var);
+        $container->setParameter("app.config.var_cache", $config->var_cache);
+        $container->setParameter("app.config.var_cache_configs", $config->var_cache_configs);
+        $container->setParameter("app.config.var_files", $config->var_files);
+        $container->setParameter("app.config.var_lib", $config->var_lib);
+        $container->setParameter("app.config.var_tmp", $config->var_tmp);
     }
 
     private function apply_compiler_passes(ContainerBuilder $builder): void

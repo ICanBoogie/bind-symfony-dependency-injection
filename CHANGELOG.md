@@ -1,4 +1,4 @@
-# Migration
+# CHANGELOG
 
 # v5.0 to v6.0
 
@@ -14,6 +14,7 @@
 - The package uses the new config builder feature introduced by [ICanBoogie/Config][] v6.0. The
   configuration is now an instance of `Config` and no longer an array.
 
+    Before:
     ```php
     <?php
 
@@ -26,6 +27,7 @@
     $app->configs[ContainerConfig::FRAGMENT_FOR_CONTAINER][ContainerConfig::USE_CACHING];
     ```
 
+    After:
     ```php
     <?php
 
@@ -39,6 +41,9 @@
     $app->config_for_class(Config::class)->use_caching;
     ```
 
+## New features
+
+- `AppConfig` parameters are added as `app.config.*` parameters; for example `app.config.var`.
 
 
 [ICanBoogie/Config]: https://github.com/ICanBoogie/Config/

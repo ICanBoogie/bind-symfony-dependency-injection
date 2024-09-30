@@ -1,3 +1,7 @@
+parameters:
+
+  test.cache_dir: "%app.config.var_cache%test/"
+
 services:
 
   service_a:

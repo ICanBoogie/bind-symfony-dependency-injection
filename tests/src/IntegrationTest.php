@@ -1,20 +1,12 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Autoconfig\Autoconfig;
 use ICanBoogie\ConfigProvider;
 use ICanBoogie\ServiceProvider;
 use ICanBoogie\Storage\Storage;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 use Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\ServiceA;
 use Test\ICanBoogie\Binding\SymfonyDependencyInjection\Acme\ServiceB;
@@ -60,5 +52,27 @@ final class IntegrationTest extends TestCase
             "Hello world!",
             app()->container->getParameter('compiler_pass_parameter')
         );
+    }
+
+    #[DataProvider("provide_app_config_parameter")]
+    public function test_app_config_parameter(string $param, mixed $expected): void
+    {
+        $actual = app()->container->getParameter($param);
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    /** @phpstan-ignore-next-line */
+    public static function provide_app_config_parameter(): array
+    {
+        return [
+            [ "app.config.var", "var/" ],
+            [ "app.config.var_cache", "var/cache/" ],
+            [ "app.config.var_cache_configs", "var/cache/configs/" ],
+            [ "app.config.var_files", "var/files/" ],
+            [ "app.config.var_lib", "var/lib/" ],
+            [ "app.config.var_tmp", "var/tmp/" ],
+            [ "test.cache_dir", "var/cache/test/" ],
+        ];
     }
 }
