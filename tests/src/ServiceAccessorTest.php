@@ -4,6 +4,7 @@ namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\ConfigProvider;
 use ICanBoogie\Storage\Storage;
+use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
 
 use function ICanBoogie\app;
@@ -11,10 +12,9 @@ use function ICanBoogie\app;
 final class ServiceAccessorTest extends TestCase
 {
     /**
-     * @dataProvider provide_service
-     *
      * @param class-string $class
      */
+    #[DataProvider('provide_service')]
     public function test_service(string $id, string $class): void
     {
         $service = app()->service_for_id($id, $class);

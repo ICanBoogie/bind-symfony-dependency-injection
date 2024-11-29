@@ -1,14 +1,5 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
@@ -62,7 +53,7 @@ final class ContainerFactory
         $app = $this->app;
         $pathname = ContainerPathname::from($app);
         /** @var class-string<ContainerInterface> $class */
-        $class = 'ApplicationContainer';
+        $class = 'ApplicationContainer'; // @phpstan-ignore varTag.nativeType
 
         if (!$this->config->use_caching || !file_exists($pathname)) {
             $builder = $this->create_container_builder();

@@ -17,10 +17,9 @@ use function ICanBoogie\app;
 final class IntegrationTest extends TestCase
 {
     /**
-     * @dataProvider provideService
-     *
      * @param class-string $class
      */
+    #[DataProvider('provideService')]
     public function testService(string $id, string $class): void
     {
         $actual = app()->service_for_id($id, $class);

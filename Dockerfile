@@ -1,8 +1,8 @@
-ARG PHP_VERSION
+ARG PHP_VERSION=8.2
 FROM php:${PHP_VERSION}-cli-bookworm
 
 RUN <<-EOF
-    apt-get update
+	apt-get update
 	apt-get install -y autoconf pkg-config
 	pecl channel-update pecl.php.net
 	pecl install xdebug
@@ -34,6 +34,8 @@ RUN <<-EOF
 	export PATH="$HOME/.composer/vendor/bin:$PATH"
 	SHELL
 EOF
+
+RUN composer global require squizlabs/php_codesniffer
 
 # package specifics
 

@@ -1,28 +1,18 @@
 <?php
 
-/*
- * This file is part of the ICanBoogie package.
- *
- * (c) Olivier Laviale <olivier.laviale@gmail.com>
- *
- * For the full copyright and license information, please view the LICENSE
- * file that was distributed with this source code.
- */
-
 namespace Test\ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Binding\SymfonyDependencyInjection\Config;
 use ICanBoogie\Binding\SymfonyDependencyInjection\ConfigBuilder;
 use InvalidArgumentException;
+use PHPUnit\Framework\Attributes\Group;
 use PHPUnit\Framework\TestCase;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 
 use function uniqid;
 
-/**
- * @group unit
- */
+#[Group('unit')]
 final class ConfigBuilderTest extends TestCase
 {
     public function test_fail_on_invalid_extensions(): void

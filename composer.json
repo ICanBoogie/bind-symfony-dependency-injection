@@ -8,7 +8,7 @@
     "injection"
   ],
   "homepage": "https://icanboogie.org/",
-  "license": "BSD-3-Clause",
+  "license": "MIT",
   "authors": [
     {
       "name": "Olivier Laviale",
@@ -22,7 +22,10 @@
     "source": "https://github.com/ICanBoogie/bind-symfony-dependency-injection"
   },
   "config": {
-    "sort-packages": true
+    "sort-packages": true,
+    "allow-plugins": {
+      "icanboogie/autoconfig": true
+    }
   },
   "minimum-stability": "dev",
   "prefer-stable": true,
@@ -34,8 +37,8 @@
     "symfony/yaml": "^7.0"
   },
   "require-dev": {
-    "phpstan/phpstan": "^1.10",
-    "phpunit/phpunit": "^10.5"
+    "phpstan/phpstan": "^2.0",
+    "phpunit/phpunit": "^11.4"
   },
   "autoload": {
     "psr-4": {
@@ -46,9 +49,6 @@
     "psr-4": {
       "Test\\ICanBoogie\\Binding\\SymfonyDependencyInjection\\": "tests/src"
     }
-  },
-  "scripts": {
-    "post-autoload-dump": "ICanBoogie\\Autoconfig\\Hooks::on_autoload_dump"
   },
   "extra": {
     "icanboogie": {

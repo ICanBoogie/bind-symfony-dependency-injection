@@ -1,6 +1,6 @@
 # CHANGELOG
 
-# v5.0 to v6.0
+# v5.x to v6.0
 
 ### New requirements
 
