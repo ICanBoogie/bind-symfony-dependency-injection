@@ -8,7 +8,11 @@ use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 final class Config
 {
     /**
-     * @param array<string, mixed> $an_array
+     * @param array{
+     *     compiler_passes: class-string<CompilerPassInterface>[],
+     *     extensions: class-string<ExtensionInterface>[],
+     *     use_caching: bool
+     * } $an_array
      */
     public static function __set_state(array $an_array): self
     {

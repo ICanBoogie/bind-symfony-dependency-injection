@@ -1,8 +1,8 @@
 # bind-symfony-dependency-injection
 
-[![Release](https://img.shields.io/packagist/v/icanboogie/<name>.svg)](https://packagist.org/packages/icanboogie/<name>)
-[![Code Coverage](https://coveralls.io/repos/github/ICanBoogie/<Name>/badge.svg?branch=6.0)](https://coveralls.io/r/ICanBoogie/<Name>?branch=6.0)
-[![Downloads](https://img.shields.io/packagist/dt/icanboogie/<name>.svg)](https://packagist.org/packages/icanboogie/<name>)
+[![Release](https://img.shields.io/packagist/v/icanboogie/bind-symfony-dependency-injection.svg)](https://packagist.org/packages/icanboogie/bind-symfony-dependency-injection)
+[![Code Coverage](https://coveralls.io/repos/github/ICanBoogie/bind-symfony-dependency-injection/badge.svg?branch=7.0)](https://coveralls.io/r/ICanBoogie/bind-symfony-dependency-injection?branch=7.0)
+[![Downloads](https://img.shields.io/packagist/dt/icanboogie/bind-symfony-dependency-injection.svg)](https://packagist.org/packages/icanboogie/bind-symfony-dependency-injection)
 
 Together with [icanboogie/service][], this package binds [symfony/dependency-injection][] to
 [ICanBoogie][] and allows the container to be used to provide services.
@@ -130,11 +130,11 @@ return fn(ConfigBuilder $config) => $config
 
 ## Continuous Integration
 
-The project is continuously tested by [GitHub actions](https://github.com/ICanBoogie/<Name>/actions).
+The project is continuously tested by [GitHub actions](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions).
 
-[![Tests](https://github.com/ICanBoogie/<Name>/actions/workflows/test.yml/badge.svg?branch=6.0)](https://github.com/ICanBoogie/<Name>/actions/workflows/test.yml)
-[![Static Analysis](https://github.com/ICanBoogie/<Name>/actions/workflows/static-analysis.yml/badge.svg?branch=6.0)](https://github.com/ICanBoogie/<Name>/actions/workflows/static-analysis.yml)
-[![Code Style](https://github.com/ICanBoogie/<Name>/actions/workflows/code-style.yml/badge.svg?branch=6.0)](https://github.com/ICanBoogie/<Name>/actions/workflows/code-style.yml)
+[![Tests](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions/workflows/test.yml/badge.svg?branch=7.0)](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions/workflows/test.yml)
+[![Static Analysis](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions/workflows/static-analysis.yml/badge.svg?branch=7.0)](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions/workflows/static-analysis.yml)
+[![Code Style](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions/workflows/code-style.yml/badge.svg?branch=7.0)](https://github.com/ICanBoogie/bind-symfony-dependency-injection/actions/workflows/code-style.yml)
 
 
 

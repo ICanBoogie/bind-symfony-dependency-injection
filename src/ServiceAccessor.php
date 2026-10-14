@@ -16,6 +16,7 @@ final class ServiceAccessor
 
     public function get(string $id): object
     {
+        // @phpstan-ignore return.type (the service is defined as a property of the application)
         return $this->app->$id;
     }
 }

@@ -1,0 +1,25 @@
+parameters:
+	ignoreErrors:
+		-
+			message: '#^Constructor of class Test\\ICanBoogie\\Binding\\SymfonyDependencyInjection\\Acme\\ServiceB has an unused parameter \$a\.$#'
+			identifier: constructor.unusedParameter
+			count: 1
+			path: tests/src/Acme/ServiceB.php
+
+		-
+			message: '#^Constructor of class Test\\ICanBoogie\\Binding\\SymfonyDependencyInjection\\Acme\\ServiceC has an unused parameter \$a\.$#'
+			identifier: constructor.unusedParameter
+			count: 1
+			path: tests/src/Acme/ServiceC.php
+
+		-
+			message: '#^Constructor of class Test\\ICanBoogie\\Binding\\SymfonyDependencyInjection\\Acme\\ServiceC has an unused parameter \$b\.$#'
+			identifier: constructor.unusedParameter
+			count: 1
+			path: tests/src/Acme/ServiceC.php
+
+		-
+			message: '#^Method Test\\ICanBoogie\\Binding\\SymfonyDependencyInjection\\SetStateHelper\:\:export_import\(\) should return T of object but returns mixed\.$#'
+			identifier: return.type
+			count: 1
+			path: tests/src/SetStateHelper.php

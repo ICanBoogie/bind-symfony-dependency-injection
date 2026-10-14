@@ -1,13 +1,36 @@
 # CHANGELOG
 
-# v5.x to v6.0
+## v7.0.0
+
+### New Requirements
+
+- PHP 8.4+
+- icanboogie/icanboogie v7.0
+
+### New features
+
+None
+
+### Deprecated Features
+
+None
+
+### Backward Incompatible Changes
+
+None
+
+### Other Changes
+
+- The license is now BSD-3-Clause, as for the other ICanBoogie packages.
+
+## v6.0.0
 
 ### New requirements
 
 - Requires PHP v8.2+
 - Requires olvlvl/symfony-dependency-injection-proxy v6.0+
 
-## Breaking changes
+### Breaking changes
 
 - The container proxy has been replaced by a container factory. The container is now created right away and returned. Also, the package doesn't deal with `ICanBoogie\Service` anymore and let ICanBoogie deal with it instead. The prototype method `Application::get_container` and `ApplicationBindings` are removed. The event listener for `BootEvent` is removed.
 
@@ -41,7 +64,7 @@
     $app->config_for_class(Config::class)->use_caching;
     ```
 
-## New features
+### New features
 
 - `AppConfig` parameters are added as `app.config.*` parameters; for example `app.config.var`.
 

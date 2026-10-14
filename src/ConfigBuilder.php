@@ -40,7 +40,6 @@ final class ConfigBuilder implements Builder
      */
     public function add_compiler_pass(string $compiler_pass_class): self
     {
-        // @phpstan-ignore-next-line
         if (!is_subclass_of($compiler_pass_class, CompilerPassInterface::class)) {
             throw new InvalidArgumentException("Compiler pass must implement " . CompilerPassInterface::class);
         }
@@ -60,7 +59,6 @@ final class ConfigBuilder implements Builder
      */
     public function add_extension(string $extension_class): self
     {
-        // @phpstan-ignore-next-line
         if (!is_subclass_of($extension_class, ExtensionInterface::class)) {
             throw new InvalidArgumentException("Extension must implement " . ExtensionInterface::class);
         }

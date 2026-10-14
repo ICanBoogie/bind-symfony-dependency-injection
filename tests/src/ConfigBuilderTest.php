@@ -59,11 +59,11 @@ final class ConfigBuilderTest extends TestCase
 
     private function mockExtension(): ExtensionInterface
     {
-        return $this->createMock(ExtensionInterface::class);
+        return $this->createStub(ExtensionInterface::class);
     }
 
     private function mockCompilerPass(): CompilerPassInterface
     {
-        return $this->createMock(CompilerPassInterface::class);
+        return $this->createStub(CompilerPassInterface::class);
     }
 }
