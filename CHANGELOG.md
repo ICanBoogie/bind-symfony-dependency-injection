@@ -22,6 +22,7 @@ None
 ### Other Changes
 
 - The license is now BSD-3-Clause, as for the other ICanBoogie packages.
+- The dumped container is now written to a temporary file and renamed into place, which is atomic, to avoid partial files.
 
 ## v6.0.0
 

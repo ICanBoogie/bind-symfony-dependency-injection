@@ -4,6 +4,7 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
 use olvlvl\SymfonyDependencyInjectionProxy\ProxyDumper;
+use RuntimeException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
@@ -11,14 +12,22 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\DependencyInjection\Dumper\PhpDumper;
 use Symfony\Component\DependencyInjection\Extension\ExtensionInterface;
 use Symfony\Component\DependencyInjection\Loader\YamlFileLoader;
+use Throwable;
 
 use function array_keys;
 use function assert;
+use function basename;
+use function chmod;
+use function dirname;
 use function file_exists;
 use function file_put_contents;
 use function getcwd;
 use function is_string;
 use function is_subclass_of;
+use function rename;
+use function tempnam;
+use function umask;
+use function unlink;
 
 use const DIRECTORY_SEPARATOR;
 
@@ -183,6 +192,28 @@ final class ContainerFactory
         $dumper = new PhpDumper($container);
         $dumper->setProxyDumper(new ProxyDumper());
 
-        file_put_contents($pathname, $dumper->dump([ 'class' => $class ]));
+        // Write to a temporary file then rename it, which is atomic, to avoid exposing a partial file.
+        $target = (string) $pathname;
+        $temp = tempnam(dirname($target), basename($target) . '.tmp');
+
+        if ($temp === false) {
+            throw new RuntimeException("Unable to create a temporary file in '" . dirname($target) . "'");
+        }
+
+        try {
+            if (file_put_contents($temp, $dumper->dump([ 'class' => $class ])) === false) {
+                throw new RuntimeException("Unable to write temporary file '$temp'");
+            }
+
+            chmod($temp, 0666 & ~umask());
+
+            if (!rename($temp, $target)) {
+                throw new RuntimeException("Unable to rename '$temp' to '$target'");
+            }
+        } catch (Throwable $e) {
+            @unlink($temp);
+
+            throw $e;
+        }
     }
 }
