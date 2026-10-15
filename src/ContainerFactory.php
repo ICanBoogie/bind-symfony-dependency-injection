@@ -3,7 +3,6 @@
 namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application;
-use olvlvl\SymfonyDependencyInjectionProxy\ProxyDumper;
 use RuntimeException;
 use Symfony\Component\Config\FileLocator;
 use Symfony\Component\DependencyInjection\Compiler\CompilerPassInterface;
@@ -190,7 +189,6 @@ final class ContainerFactory
         $pathname->assert_writeable();
 
         $dumper = new PhpDumper($container);
-        $dumper->setProxyDumper(new ProxyDumper());
 
         // Write to a temporary file then rename it, which is atomic, to avoid exposing a partial file.
         $target = (string) $pathname;

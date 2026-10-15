@@ -105,6 +105,22 @@ $container = $proxy->container;
 
 
 
+## Lazy services
+
+Services marked as `lazy: true` are proxied by Symfony's own dumper, using PHP's native lazy objects.
+No additional package is required, and classes without interfaces and `final` classes can be lazy too.
+
+```yaml
+services:
+  Psr\Log\LoggerInterface:
+    class: Monolog\Logger
+    lazy: true
+```
+
+
+
+
+
 ## Configuring the container
 
 The container is configured using `container` configuration fragments:

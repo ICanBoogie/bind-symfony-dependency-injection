@@ -25,7 +25,7 @@ $di = new DirectoryIterator(SANDBOX);
 $di = new RegexIterator($di, '/\.php$/');
 
 foreach ($di as $file) {
-    /** @var DirectoryIterator $file */
+    /** @var \DirectoryIterator $file */
 
     unlink($file->getPathname());
 }
