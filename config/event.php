@@ -10,7 +10,7 @@
  */
 
 use ICanBoogie\Application\ClearCacheEvent;
-use ICanBoogie\Binding\Event\ConfigBuilder;
+use ICanBoogie\Event\ConfigBuilder;
 use ICanBoogie\Binding\SymfonyDependencyInjection\EventListener;
 
 return fn(ConfigBuilder $config) => $config
