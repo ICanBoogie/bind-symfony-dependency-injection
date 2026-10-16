@@ -4,23 +4,27 @@ namespace ICanBoogie\Binding\SymfonyDependencyInjection;
 
 use ICanBoogie\Application\ClearCacheEvent;
 
-use function file_exists;
 use function unlink;
 
 final class EventListener
 {
     /**
-     * Unlinks the dumped container on {@link ClearCacheEvent}.
+     * Unlinks the container link on {@link ClearCacheEvent}. The hashed files are not removed right away,
+     * because running processes might be about to load them, they are pruned once old enough.
      */
     public static function on_clear_cache(ClearCacheEvent $event): void
     {
-        $pathname = (string) ContainerPathname::from($event->app);
+        $container = ContainerPathname::from($event->app);
+        $pathname = (string) $container;
 
-        if (!file_exists($pathname)) {
+        if (!$container->exists()) {
+            $container->prune();
+
             return;
         }
 
         unlink($pathname);
+        $container->prune();
 
         $event->cleared("container ($pathname)");
     }

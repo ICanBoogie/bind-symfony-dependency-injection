@@ -24,6 +24,8 @@ None
 
 - The license is now BSD-3-Clause, as for the other ICanBoogie packages.
 - The dumped container is now written to a temporary file and renamed into place, which is atomic, to avoid partial files.
+- The dumped container is now named after the hash of its source (`container-compiled.<hash>.php`) and is never modified once written. `container-compiled.php` is a symbolic link to the current file, switched atomically, so processes can safely load the container while another one compiles a new version.
+- Outdated container files, and temporary files left by crashed writers, are removed once they are older than 10 minutes.
 
 ## v6.0.0
 
